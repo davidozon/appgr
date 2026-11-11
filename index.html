@@ -4,9 +4,9 @@
 <title>App GR</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#E8ECEE;--card:#F6F8F9;--ink:#14212B;--mut:#5A6B76;--pine:#2F5D50;--ice:#4E86B0;--warn:#B4492F;--line:#CBD3D8;--prog:#1F8A5B;--vig:#E6A100;--risk:#D2321C;--zt:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11181D;--card:#1A242B;--ink:#E6ECEF;--mut:#93A3AD;--pine:#6FB39E;--ice:#7DB0D6;--warn:#E08466;--line:#2B3841;--prog:#3CC98A;--vig:#F5B925;--risk:#FF5A3C;--zt:#10201B;color-scheme:dark}}
-:root[data-theme="dark"]{--zt:#10201B;--prog:#3CC98A;--vig:#F5B925;--risk:#FF5A3C;--bg:#11181D;--card:#1A242B;--ink:#E6ECEF;--mut:#93A3AD;--pine:#6FB39E;--ice:#7DB0D6;--warn:#E08466;--line:#2B3841;color-scheme:dark}
+:root{--bg:#E8ECEE;--card:#F6F8F9;--ink:#14212B;--mut:#5A6B76;--pine:#2F5D50;--ice:#4E86B0;--warn:#B4492F;--line:#CBD3D8;--prog:#1F8A5B;--vig:#FFCF1F;--risk:#D2321C;--zt:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11181D;--card:#1A242B;--ink:#E6ECEF;--mut:#93A3AD;--pine:#6FB39E;--ice:#7DB0D6;--warn:#E08466;--line:#2B3841;--prog:#3CC98A;--vig:#FFDA3D;--risk:#FF5A3C;--zt:#10201B;color-scheme:dark}}
+:root[data-theme="dark"]{--zt:#10201B;--prog:#3CC98A;--vig:#FFDA3D;--risk:#FF5A3C;--bg:#11181D;--card:#1A242B;--ink:#E6ECEF;--mut:#93A3AD;--pine:#6FB39E;--ice:#7DB0D6;--warn:#E08466;--line:#2B3841;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Barlow,system-ui,sans-serif}
@@ -94,9 +94,9 @@ html.lock,html.lock body{overflow:hidden}
 <p><b>Nombre de séances conseillé</b> : la charge d’une séance est son EPOC, lu dans vos fichiers Suunto (le champ de charge d’entraînement de vos fichiers est vide). On compare la charge des 10 derniers jours à votre charge habituelle, soit la moyenne par 10 jours sur les 28 jours précédents. Le budget visé est cette charge habituelle +15 % (−40 % en affûtage), ramené à +0 % si le ratio dépasse 1,3 et −14 % au-delà de 1,5. Le nombre conseillé est ce budget divisé par la charge moyenne d’une séance, plafonné par votre disponibilité. Toutes vos séances enregistrées comptent dans le total, patinoire et cardio base comprises. Ces repères sont courants, mais non validés pour vous.</p>
 <p><b>Temps avant une séance pertinente</b> : quand la charge des 10 jours atteint ou dépasse le repère conseillé, la page estime la fatigue restante : chaque séance compte par son EPOC, qui s’atténue avec le temps depuis la fin de la séance, à une vitesse propre à vous (plus lente si la montre annonce plus de récupération par unité d’EPOC qu’à l’habitude). Le temps affiché est celui où cette fatigue repasse sous le niveau d’équilibre correspondant au repère. Il est comparé à la récupération annoncée par la montre pour les séances des 3 derniers jours, et à un minimum de 24 h après une séance d’effet d’entraînement 3 ou plus (48 h à partir de 4) : la page garde le plus long. Ces durées sont des repères non validés. C’est une estimation : elle suppose qu’aucune autre séance n’est faite et que le repère ne change pas.</p>
 <p><b>Graphique de charge EPOC</b> : la courbe est la somme des EPOC sur 10 jours glissants (3 semaines passées, 10 jours de prévision). Les zones sont exprimées par rapport à votre charge habituelle à chaque date : progression entre 0,8 et 1,3 fois, vigilance de 1,3 à 1,5, risque au-delà. Ces seuils viennent du ratio charge aiguë / chronique (repère courant de 0,8 à 1,3), adapté ici à 10 jours / 28 jours ; ils sont discutés dans la littérature et non validés pour vous. La prévision place au plus une séance par jour (vers 18 h) quand la fatigue estimée le permet, choisit le type qui manque le plus dans la répartition de la phase, n’enchaîne pas deux fois le même type en moins de 48 h et ne dépasse pas la charge conseillée. Elle ne tient pas compte de vos réglages d’énergie et de courbatures.</p>
-<ul><li><b>Renforcement</b> : il prolonge vos séances habituelles (haut du corps). Sur un trek avec sac, chaînes et passages d’escalade, le dos, les épaules, les bras et le gainage comptent ; les jambes sont déjà travaillées par la marche inclinée.</li>
+<ul><li><b>Renforcement et HIT</b> : la proposition est une charge à atteindre, pas un contenu de séance. L’EPOC visé est la moyenne de vos 8 dernières séances du même type, réduit si la récupération est moyenne (−20 %) ou basse (−40 %), et limité à la marge restante sous la charge conseillée sur 10 jours (sans descendre sous la moitié de l’habituel). La durée est votre durée moyenne pour ce type, ajustée dans la même proportion ; c’est une approximation, l’EPOC ne croît pas proportionnellement au temps.</li>
 <li><b>Patinoire et cardio base</b> : comptées dans vos séances faites, jamais proposées. La marche inclinée tient lieu d’endurance de base.</li>
-<li><b>HIT</b> : format court de moins de 20 min, avec marche à 20 %, course de 60 à 90 s à 7 km/h et 8 %, récupération à 5 %. Le nombre de blocs dépend de la phase et de la récupération. Réglages repris de votre tapis (3 km/h au-delà de 12 %).</li>
+
 <li><b>Marche inclinée</b> : D+ = vitesse × pente. À 3 km/h et 20-24 %, comptez 10 à 12 m de D+ par minute, d’où la durée. La séance longue est proposée si aucune marche à 400 m de D+ ou plus n’a eu lieu sur 7 jours et si la récupération est d’au moins 60 ; sinon la courte (environ 200 m).</li>
 <li><b>Charge proposée</b> (marche inclinée et HIT) : elle part du minimum réglé (curseur de gauche) à 28 semaines de l’objectif et monte régulièrement jusqu’au maximum (curseur de droite) à 4 semaines, puis passe à 60 % du maximum en affûtage, sans descendre sous le minimum. Elle est réduite si la récupération est moyenne ou basse, et limitée à +2 kg par rapport à la charge la plus lourde enregistrée sur vos marches des 28 derniers jours. La marche courte reprend 60 % de la charge et le HIT 40 %, sans jamais passer sous le minimum. Ces proportions sont mes choix, non validés.</li></ul>
 <p class="why">Seuils et volumes sont des choix raisonnables, non validés par un professionnel. Ce n’est pas un avis médical : en cas de douleur, ne forcez pas.</p></details></section>
@@ -177,6 +177,11 @@ function dl(){const M=25,lo=goal.kmin,hi=goal.kmax,e=$("#dfill");$("#gk1").value
 ["gk1","gk2"].forEach(id=>{$("#"+id).oninput=()=>{let lo=+$("#gk1").value,hi=+$("#gk2").value;if(id==="gk1"&&lo>hi)lo=hi;if(id==="gk2"&&hi<lo)hi=lo;goal.kmin=lo;goal.kmax=hi;st.set("g",goal);dl();sum10()}});
 function lds(f){const k=lk(f),m=goal.kmin;return{l:k,c:Math.min(k,Math.max(m,Math.round(k*.6))),h:Math.min(k,Math.max(m,Math.round(k*.4)))}}
 function lk(f){const lo=goal.kmin,hi=goal.kmax;if(!hi)return 0;const w=wks(),rk=acts.filter(a=>a.type==="marche"&&a.kg&&Date.now()-a.t<28*864e5).map(a=>a.kg);let k=w<2?Math.max(lo,hi*.6):lo+(hi-lo)*(w>=28?0:w<=4?1:(28-w)/24);k*=f;if(rk.length)k=Math.min(k,Math.max(...rk)+2);return Math.round(Math.min(hi,Math.max(lo,k)))}
+function epT(ty,f){
+ const x=acts.filter(a=>a.type===ty&&a.ep!=null&&a.dur).slice(0,8),ep=x.length?x.reduce((s,a)=>s+a.ep,0)/x.length:(ty==="hiit"?35:20),du=x.length?x.reduce((s,a)=>s+a.dur,0)/x.length:(ty==="hiit"?20:45),L=LD(),r=[];
+ let e=ep*f;if(f<1)r.push("réduit de "+Math.round((1-f)*100)+" % selon votre récupération");
+ if(L.C>=5){const room=L.B-L.A;if(room>0&&room<e){e=Math.max(ep*.5,room);r.push("limité à la marge restante sur 10 jours")}}
+ return{e:Math.round(e),d:Math.max(10,Math.round(du*e/ep/5)*5),n:x.length,r:r.join(", ")}}
 function plan(ty,r){
  const w=wks(),P=phase(w),wk=acts.filter(a=>Date.now()-a.t<7*864e5),c={renfo:0,hiit:0,base:0,marche:0,patin:0};
  wk.forEach(a=>{if(c[a.type]!=null)c[a.type]++});
@@ -186,13 +191,9 @@ function plan(ty,r){
  
  
  
- if(ty==="renfo"){
-  const [n,rp,n2]={base:[3,12,"charge modérée"],build:[4,8,"charge lourde, remontée contrôlée"],spec:[3,10,"descente en 3 s"],taper:[2,8,"charge légère"]}[P],S=Math.max(2,Math.round(n*f));
-  return{t:"Renforcement · "+Math.round(45*f)+" min",l:["Tractions ou tirage vertical : "+S+" × "+rp+" ("+n2+")","Rowing haltère ou barre : "+S+" × "+rp,"Développé militaire haltères : "+S+" × "+rp,"Développé couché ou pompes lestées : "+S+" × "+rp,"Oiseau ou face pull (arrière d’épaules) : "+S+" × 15","Gainage planche puis latéral : "+S+" × 40 s"],why};
- }
- if(ty==="hiit"){
-  const [n,ru]={base:[3,60],build:[3,90],spec:[3,90],taper:[2,60]}[P],R=Math.max(2,Math.round(n*f)),min=Math.round(3+R*(ru+180)/60+2),kh=lds(f).h,lh=kh>=1?"Gilet ou sac bien serré, charge plus légère qu’en marche car il y a de la course. Sans charge en cas de gêne.":"";
-  return{t:"HIT",t2:(kh>=1?kh+" kg · ":"")+min+" min",l:["3 min d’échauffement : marche à 8 %.",R+" blocs : course "+ru+" s à 7 km/h et 8 %, puis 1 min de récupération à 5 %, puis 2 min de marche à 20 % (3 km/h).","2 min de retour au calme à 5 %.",lh,"Course en petites foulées ; arrêtez-la si une douleur apparaît."],why,kg:kh};
+ if(ty==="renfo"||ty==="hiit"){
+  const q=epT(ty,f),kh=ty==="hiit"?lds(f).h:0,src=q.n?"moyenne de vos "+q.n+" dernières séances de ce type":"valeur par défaut, faute de séance de ce type enregistrée";
+  return{t:ty==="hiit"?"HIT":"Renforcement",t2:(kh>=1?kh+" kg · ":"")+q.d+" min · EPOC "+q.e,l:["Charge visée : EPOC ≈ "+q.e+" ("+src+(q.r?", "+q.r:"")+").","Durée indicative : environ "+q.d+" min à votre intensité habituelle pour ce type de séance.",kh>=1?"Gilet ou sac bien serré, plus léger qu’en marche. Sans charge en cas de gêne.":""],why,kg:kh};
  }
  
  const lg=!wk.some(a=>a.type==="marche"&&a.asc>=400)&&r.s>=60;
@@ -262,7 +263,7 @@ function chart(){
  const ZN=v=>v==null?["–","var(--mut)"]:v<.8?["sous-charge","var(--mut)"]:v<=1.3?["progression","var(--prog)"]:v<=1.5?["vigilance","var(--vig)"]:["risque","var(--risk)"],N=v=>Math.round(v).toLocaleString("fr-FR"),F=x=>x.toFixed(2).replace(".",",");
  const NM={marche:'marche inclinée',renfo:'renforcement',hiit:'HIT'};
  el.innerHTML='<div id="egr" tabindex="0" aria-label="Graphique de charge EPOC. Glisser pour parcourir, pincer pour zoomer, flèches et touches + et − au clavier."></div><div id="edt" class="edt" aria-live="polite"></div>'
-  +'<div class="lg"><span><i style="background:var(--prog);opacity:.6"></i>progression (0,8–1,3)</span><span><i style="background:var(--vig);opacity:.7"></i>vigilance (1,3–1,5)</span><span><i style="background:var(--risk);opacity:.7"></i>risque (&gt; 1,5)</span><span>····· conseillée</span><span>— réel · - - prévision</span></div>'
+  +'<div class="lg"><span><i style="background:var(--prog);opacity:.6"></i>progression (0,8–1,3)</span><span><i style="background:var(--vig);opacity:.85"></i>vigilance (1,3–1,5)</span><span><i style="background:var(--risk);opacity:.7"></i>risque (&gt; 1,5)</span><span>····· conseillée</span><span>— réel · - - prévision</span></div>'
   +'<details class="edx"><summary>Prévision et calcul de la charge</summary>'
   +(L.r!=null?'<p class="fl2">Charge 10 j / habituelle aujourd’hui : <b>'+F(L.r)+'</b> ('+ZN(L.r)[0]+')</p>':'<p class="why">Historique insuffisant pour situer les zones (il faut des séances entre 10 et 38 jours en arrière).</p>')
   +'<p class="fl2">'+(fut.length?'Prévision : '+fut.map(s=>new Date(s.t).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric"})+' '+NM[s.type]).join(" · "):'Aucune séance prévue sur 10 jours : charge conseillée atteinte ou récupération en cours.')+'</p>'
@@ -282,7 +283,7 @@ function chart(){
   const line=f=>{const j=ix.filter(i=>f(pts[i]));return j.length>1?"M"+j.map(i=>P2(pts[i],A[i])).join("L"):""};
   let o='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Charge EPOC sur 10 jours glissants"><defs><clipPath id="ecp0"><rect x="'+l+'" y="0" width="'+pw+'" height="'+Hh+'"/></clipPath></defs>';
   const st=Math.max(10,Math.ceil(mx/3/10)*10);for(let v=0;v<mx;v+=st)o+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+'" style="stroke:var(--line)"/><text x="'+(l-4)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end" style="fill:var(--mut)">'+v+'</text>';
-  o+='<g clip-path="url(#ecp0)">'+band(.8,1.3,"fill:var(--prog);opacity:.3")+band(1.3,1.5,"fill:var(--vig);opacity:.4")+band(1.5,99,"fill:var(--risk);opacity:.42");
+  o+='<g clip-path="url(#ecp0)">'+band(.8,1.3,"fill:var(--prog);opacity:.3")+band(1.3,1.5,"fill:var(--vig);opacity:.55")+band(1.5,99,"fill:var(--risk);opacity:.42");
   const sd=s<=9*D?1:s<=18*D?2:s<=45*D?7:14,dd=new Date(T0);dd.setHours(0,0,0,0);if(sd>=7)dd.setDate(dd.getDate()-((dd.getDay()+6)%7));
   for(let t=dd.getTime();t<=T1;t+=sd*D){const d=new Date(t);if(t<T0)continue;o+='<line x1="'+X(t).toFixed(1)+'" x2="'+X(t).toFixed(1)+'" y1="'+(Hh-b)+'" y2="'+(Hh-b+3)+'" style="stroke:var(--mut)"/><text x="'+X(t).toFixed(1)+'" y="'+(Hh-6)+'" text-anchor="middle" style="fill:var(--mut)">'+d.getDate()+'/'+(d.getMonth()+1)+'</text>'}
   o+=segs().map(q=>'<path d="M'+q.map(i=>P2(pts[i],C[i]*G[i])).join("L")+'" style="fill:none;stroke:var(--ink);stroke-width:1;stroke-dasharray:1 3"/>').join("");
