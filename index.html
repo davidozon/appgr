@@ -445,7 +445,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.33";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.34";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
@@ -533,6 +533,11 @@ const tFS=async b=>{const d=document,el=d.documentElement,inFs=d.fullscreenEleme
  if(!inFs&&(!rq||ok===false)){toast(window.self!==window.top?"Plein écran bloqué dans ce cadre : ouvrez l’app dans le navigateur (davidozon.github.io/appgr).":"Ce navigateur ne permet pas le plein écran ici. Sur iPhone : Partager, puis « Sur l’écran d’accueil ».");return}
  try{if(inFs){await(d.exitFullscreen||d.webkitExitFullscreen).call(d);return}let st_="en attente";const pr=Promise.resolve(rq.call(el)).then(()=>st_="acceptée",e=>st_="refusée ("+(e&&e.name||"erreur")+")");await Promise.race([pr,new Promise(z=>setTimeout(z,1500))]);await new Promise(z=>setTimeout(z,200));if(!(d.fullscreenElement||d.webkitFullscreenElement))toast((window.self!==window.top?"Le plein écran n’a pas été accordé dans ce cadre : ouvrez l’app directement dans le navigateur (davidozon.github.io/appgr).":"Ce navigateur n’active pas le plein écran pour cette page (demande "+st_+").")+(BIP?" Installez App GR : elle s’ouvrira en plein écran depuis son icône.":" Solution fiable : menu du navigateur, « Ajouter à l’écran d’accueil » ou « Installer l’application » ; App GR s’ouvrira alors en plein écran."),instOffer())}catch(e){toast("Plein écran refusé par le navigateur ("+(e&&e.name||"erreur")+").")}};
 document.querySelectorAll(".fsb").forEach(b=>b.onclick=()=>tFS(b));
-head();list();sum10();applyAuto();
+document.querySelectorAll("input,select,textarea").forEach(e=>e.setAttribute("autocomplete","off"));
+function syncUI(){const set=(id,v,txt)=>{const e=$("#"+id);if(!e||v==null)return;e.value=v;if(txt!=null&&e.nextElementSibling)e.nextElementSibling.textContent=txt};
+ set("s1",rec.wr,rec.wr+"%");set("s2",rec.en,""+rec.en);set("s3",rec.so,""+rec.so);set("nt",tgt,""+tgt);set("pg",prog);$("#pgv").textContent=prog?"+"+prog+" %":"0 %";
+ const d=$("#ivd");if(d){d.value=IV.d;d.nextElementSibling.textContent=IV.d}if($("#hm")){$("#hm").value=HIT_MIN;$("#hp").value=Math.round(HIT_PCT*100)}dl()}
+head();list();sum10();applyAuto();syncUI();
+addEventListener("pageshow",e=>{syncUI();requestAnimationFrame(syncUI)});
 if("serviceWorker" in navigator&&/github\.io$/.test(location.hostname))navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script></body></html>
