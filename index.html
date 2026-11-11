@@ -2,7 +2,7 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>App GR</title>
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#2F5D50"><script>try{var a=JSON.parse(localStorage.getItem("acc")||"null");if(a&&a!=="vert")document.documentElement.setAttribute("data-acc",a);if(JSON.parse(localStorage.getItem("sbc")||"true")===false)document.querySelector('meta[name="theme-color"]').content=matchMedia("(prefers-color-scheme: dark)").matches?"#11181D":"#E8ECEE"}catch(e){}</script><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png?v=2"><meta name="theme-color" content="#2F5D50"><script>try{var a=JSON.parse(localStorage.getItem("acc")||"null");if(a&&a!=="vert")document.documentElement.setAttribute("data-acc",a);if(JSON.parse(localStorage.getItem("sbc")||"true")===false)document.querySelector('meta[name="theme-color"]').content=matchMedia("(prefers-color-scheme: dark)").matches?"#11181D":"#E8ECEE"}catch(e){}</script><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#E8ECEE;--card:#F6F8F9;--ink:#14212B;--mut:#5A6B76;--pine:#2F5D50;--ice:#4E86B0;--warn:#B4492F;--line:#CBD3D8;--prog:#1F8A5B;--vig:#FFCF1F;--risk:#D2321C;--zt:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
@@ -466,7 +466,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.56";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.57";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
