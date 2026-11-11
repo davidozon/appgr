@@ -300,7 +300,7 @@ function viz(){
 function bestDraw(L,r0,b){const el=$("#best");if(!el)return;const BR=a=>a.map(x=>String(x).replace(/, /g,",<br>")).join("<br>");const N=v=>Math.round(v).toLocaleString("fr-FR"),D=864e5,now=Date.now(),t0=new Date(now).setHours(0,0,0,0),f=FUT[0];
  const old=()=>'<small>Séance la plus pertinente maintenant</small><div><b>'+(b.v<40?'Repos actif':LB[b.k])+'</b><span>'+b.v+' %</span></div>'+ldChip(b,r0)+'<p class="why">'+(b.v<40?'Aucun type ne ressort clairement. ':'')+b.rs.join(' · ')+'</p>';
  if(!f||acts.filter(a=>LV(a)!=null).length<3){el.innerHTML=old();return}
- const q=relev(f.type,r0),kg=(plan(f.type,r0).t2||"").match(/^[\d,.]+\s*kg/);
+ const fu=f.t-t0>=D,q=fu?(()=>{const dn=Date.now;Date.now=()=>f.t;try{return relev(f.type,Object.assign({},r0,{s:Math.max(r0.s,75)}))}finally{Date.now=dn}})():relev(f.type,r0),kg=(plan(f.type,r0).t2||"").match(/^[\d,.]+\s*kg/);
  const sz2='<div><b>'+(kg?kg[0]+' · ':'')+N(f.dur)+' min · TSS '+N(f.tss)+'</b></div>';
  if(f.t-t0<D){el.innerHTML='<small>Séance conseillée aujourd’hui</small><div><b>'+LB[f.type]+'</b><span>'+q.v+' %</span></div>'+sz2+'<p class="why">'+BR(q.rs)+'</p>';return}
  const td=acts.filter(a=>a.t>=t0),tss=td.reduce((s,a)=>s+(LV(a)||0),0),rs=[];
@@ -460,7 +460,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.40";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.41";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
