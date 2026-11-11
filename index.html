@@ -82,6 +82,8 @@ html.lock,html.lock body{overflow:hidden}
 <section><h2>Séances sur 10 jours</h2>
 <div class="sl"><label for="nt">Disponibilité</label><input type="range" id="nt" min="1" max="10"><span></span></div>
 <p class="why">Nombre maximum de séances possibles sur 10 jours glissants. Le nombre conseillé tient compte de cette limite et de votre charge.</p>
+<div class="sl"><label for="pg">Progression</label><input type="range" id="pg" min="0" max="20" step="1" aria-describedby="pgx"><span></span></div>
+<p class="why" id="pgx"></p>
 <div id="viz"></div></section>
 
 <section id="echs"><div class="esh"><h2>Charge d’entraînement</h2><button type="button" class="ghost efb" id="efb" aria-label="Plein écran">⛶</button></div><div id="ech" class="ech"></div></section>
@@ -91,7 +93,7 @@ html.lock,html.lock body{overflow:hidden}
 <p><b>Récupération (sur 100)</b> : 50 % le pourcentage de votre montre, 30 % l’énergie, 20 % les courbatures. Si la montre annonçait encore des heures de récupération après la dernière séance, le score baisse un peu.</p>
 <p><b>Phase</b>, selon le temps restant : fondation (plus de 16 semaines), construction (6 à 16), spécifique (2 à 6), affûtage (moins de 2). Vous indiquez votre disponibilité sur 10 jours ; le nombre conseillé en découle (voir plus bas) et la phase en fixe la répartition (marche inclinée / renforcement / HIT) : fondation 30/30/40 %, construction 40/25/35 %, spécifique 55/20/25 %, affûtage 60/20/20 %. Ces parts sont mes choix, pas des valeurs validées.</p>
 <p><b>Pertinence (%)</b> : on part de 60. Elle monte si le type manque par rapport à la répartition recommandée sur 10 jours. Elle baisse si votre récupération est sous le niveau demandé (60 pour le renfo, 70 pour le HIT, 45 pour la marche), en cas de courbatures, ou si le même type date de moins de 48 h. Le HIT perd des points en affûtage ou si la charge récente est élevée (ratio supérieur à 1,3). Tous les types en perdent si la charge conseillée sur 10 jours est atteinte. La marche inclinée en gagne en phase spécifique. C’est un score de décision, pas une probabilité.</p>
-<p><b>Nombre de séances conseillé</b> : la charge d’une séance est son TSS (score de charge d’entraînement calculé par Suunto), lu dans vos fichiers. Il tient compte de la durée et de l’intensité, contrairement à l’EPOC de pointe, qui reflète surtout l’intensité maximale et sous-estime les longues sorties faciles. Une séance sans TSS (fichier lu par une ancienne version de la page) compte pour son EPOC, en attendant que vous relisiez le dossier. On compare la charge des 10 derniers jours à votre charge habituelle, soit la moyenne par 10 jours sur les 28 jours précédents. Le budget visé est cette charge habituelle +15 % (−40 % en affûtage), ramené à +0 % si le ratio dépasse 1,3 et −14 % au-delà de 1,5. Le nombre conseillé est ce budget divisé par la charge moyenne d’une séance, plafonné par votre disponibilité. Toutes vos séances enregistrées comptent dans le total, patinoire et cardio base comprises. Ces repères sont courants, mais non validés pour vous.</p>
+<p><b>Nombre de séances conseillé</b> : la charge d’une séance est son TSS (score de charge d’entraînement calculé par Suunto), lu dans vos fichiers. Il tient compte de la durée et de l’intensité, contrairement à l’EPOC de pointe, qui reflète surtout l’intensité maximale et sous-estime les longues sorties faciles. Une séance sans TSS (fichier lu par une ancienne version de la page) compte pour son EPOC, en attendant que vous relisiez le dossier. On compare la charge des 10 derniers jours à votre charge habituelle, soit la moyenne par 10 jours sur les 28 jours précédents. Le budget visé est cette charge habituelle multipliée par le ratio qui correspond à la progression choisie avec le curseur : ×1 pour un maintien, ×1,18 pour +5 % par semaine, ×1,38 pour +10 %, ×1,60 pour +15 %, ×1,83 pour +20 % (×0,6 en affûtage). Ce ratio est celui qui, tenu dans la durée, fait monter la charge habituelle (moyenne décalée de 10 à 38 jours) au rythme choisi. Si votre ratio actuel dépasse 1,3 (ou 1,5) sans que la progression choisie le demande, le budget est réduit de 13 % (ou 25 %). Quand la disponibilité est atteinte, la prévision et les cibles HIT et renforcement peuvent grossir une séance jusqu’à 1,5 fois votre moyenne pour suivre la progression. Le nombre conseillé est ce budget divisé par la charge moyenne d’une séance, plafonné par votre disponibilité. Toutes vos séances enregistrées comptent dans le total, patinoire et cardio base comprises. Ces repères sont courants, mais non validés pour vous.</p>
 <p><b>Temps avant une séance pertinente</b> : quand la charge des 10 jours atteint ou dépasse le repère conseillé, la page estime la fatigue restante : chaque séance compte par son TSS, qui s’atténue avec le temps depuis la fin de la séance, à une vitesse propre à vous (plus lente si la montre annonce plus de récupération par unité de charge qu’à l’habitude). Le temps affiché est celui où cette fatigue repasse sous le niveau d’équilibre correspondant au repère. Il est comparé à la récupération annoncée par la montre pour les séances des 3 derniers jours, et à un minimum de 24 h après une séance d’effet d’entraînement 3 ou plus (48 h à partir de 4) : la page garde le plus long. Ces durées sont des repères non validés. C’est une estimation : elle suppose qu’aucune autre séance n’est faite et que le repère ne change pas.</p>
 <p><b>Graphique de charge</b> : la courbe est la somme des TSS sur 10 jours glissants (3 semaines passées, 3 semaines de prévision). Les zones sont exprimées par rapport à votre charge habituelle à chaque date : progression entre 0,8 et 1,3 fois, vigilance de 1,3 à 1,5, risque au-delà. Ces seuils viennent du ratio charge aiguë / chronique (repère courant de 0,8 à 1,3), adapté ici à 10 jours / 28 jours ; ils sont discutés dans la littérature et non validés pour vous. La prévision place au plus une séance par jour (vers 18 h) quand la fatigue estimée le permet, choisit le type qui manque le plus dans la répartition de la phase, n’enchaîne pas deux fois le même type en moins de 48 h et ne dépasse pas la charge conseillée. Elle ne tient pas compte de vos réglages d’énergie et de courbatures.</p>
 <ul><li><b>Renforcement et HIT</b> : la proposition est une charge à atteindre, pas un contenu de séance. Le TSS visé est la moyenne de vos 8 dernières séances du même type, réduit si la récupération est moyenne (−20 %) ou basse (−40 %), et limité à la marge restante sous la charge conseillée sur 10 jours (sans descendre sous la moitié de l’habituel). La durée est votre durée moyenne pour ce type, ajustée dans la même proportion ; c’est une approximation, le TSS dépend aussi de l’intensité.</li>
@@ -180,7 +182,7 @@ function lk(f){const lo=goal.kmin,hi=goal.kmax;if(!hi)return 0;const w=wks(),rk=
 function epT(ty,f){
  const x=acts.filter(a=>a.type===ty&&LV(a)!=null&&a.dur).slice(0,8),ep=x.length?x.reduce((s,a)=>s+LV(a),0)/x.length:(ty==="hiit"?25:30),du=x.length?x.reduce((s,a)=>s+a.dur,0)/x.length:(ty==="hiit"?20:45),L=LD(),r=[];
  let e=ep*f;if(f<1)r.push("réduit de "+Math.round((1-f)*100)+" % selon votre récupération");
- if(L.C>=5){const room=L.B-L.A;if(room>0&&room<e){e=Math.max(ep*.5,room);r.push("limité à la marge restante sur 10 jours")}}
+ if(L.C>=5){const room=L.B-L.A,sl=Math.max(1,L.n-L.tot);if(room>0&&room<e){e=Math.max(ep*.5,room);r.push("limité à la marge restante sur 10 jours")}else if(f>=1&&room/sl>e){e=Math.min(ep*1.5,room/sl);r.push("augmenté pour suivre la progression visée")}}
  return{e:Math.round(e),d:Math.max(10,Math.round(du*e/ep/5)*5),n:x.length,r:r.join(", ")}}
 const LV=a=>a.tss!=null?a.tss:a.ep;
 function plan(ty,r){
@@ -202,7 +204,8 @@ function plan(ty,r){
  return{t:lg?"Marche inclinée longue":"Marche inclinée courte",t2:(kg>=1?kg+" kg · ":"")+dp+" m D+",l:["Pente "+inc+" % à 3 km/h, environ "+mn+" min (hors échauffement).","5 min d’échauffement à 8 %, puis la pente cible sans courir.","","Durée calculée avec un tapis réglé à 3 km/h au-delà de 12 %."],why,kg};
 }
 const SH={base:{marche:.3,renfo:.3,hiit:.4},build:{marche:.4,renfo:.25,hiit:.35},spec:{marche:.55,renfo:.2,hiit:.25},taper:{marche:.6,renfo:.2,hiit:.2}};
-let tgt=Math.min(10,st.get("n",6));
+let tgt=Math.min(10,st.get("n",6)),prog=Math.min(20,Math.max(0,st.get("pg",5)));
+const prR=p=>{if(p<=0)return 1;const k=Math.log(1+p/100)/7;return 28*k/(Math.exp(-10*k)-Math.exp(-38*k))};
 const done10=()=>{const c={renfo:0,hiit:0,base:0,marche:0,patin:0};acts.forEach(a=>{if(Date.now()-a.t<10*864e5&&c[a.type]!=null)c[a.type]++});return c};
 function alloc(N,P){const s=SH[P],t={};let u=0;Object.keys(s).forEach(k=>{t[k]=Math.floor(N*s[k]);u+=t[k]});Object.keys(s).sort((a,b)=>(N*s[b]-t[b])-(N*s[a]-t[a])).slice(0,N-u).forEach(k=>t[k]++);return t}
 const CL={marche:"var(--pine)",renfo:"var(--ice)",hiit:"var(--warn)",patin:"var(--mut)",base:"var(--mut)"},LT={marche:"M",hiit:"H",renfo:"R",patin:"P",base:"C"},LB={marche:"Marche inclinée",hiit:"HIT",renfo:"Renforcement"};
@@ -224,7 +227,7 @@ function adj(a,p){
  return{f:Math.max(.7,f),n,tau:4*Math.min(1.5,Math.max(.8,q))}}
 function rest(a,B,now,tau){const D=864e5,F=a.reduce((s,x)=>s+LV(x)*Math.exp(-(now-(x.t+x.dur*6e4))/(tau*D)),0),th=B*.4;return F>th?tau*Math.log(F/th)*24:0}
 function LD(){
- const now=Date.now(),D=864e5,P=phase(wks()),ac=acts.filter(a=>LV(a)!=null),in10=ac.filter(a=>now-a.t<10*D),pre=ac.filter(a=>now-a.t>=10*D&&now-a.t<38*D),A=in10.reduce((s,a)=>s+LV(a),0),C=pre.reduce((s,a)=>s+LV(a),0)/2.8,all=in10.concat(pre),m=all.length?all.reduce((s,a)=>s+LV(a),0)/all.length:30,r=C>=5?A/C:null,ad=adj(in10,pre),g={base:1.15,build:1.15,spec:1.15,taper:.6}[P]*(r>1.5?.75:r>1.3?.87:1)*ad.f,n=C>=5?Math.max(1,Math.min(tgt,Math.round(C*g/m))):tgt,c=done10();
+ const now=Date.now(),D=864e5,P=phase(wks()),ac=acts.filter(a=>LV(a)!=null),in10=ac.filter(a=>now-a.t<10*D),pre=ac.filter(a=>now-a.t>=10*D&&now-a.t<38*D),A=in10.reduce((s,a)=>s+LV(a),0),C=pre.reduce((s,a)=>s+LV(a),0)/2.8,all=in10.concat(pre),m=all.length?all.reduce((s,a)=>s+LV(a),0)/all.length:30,r=C>=5?A/C:null,ad=adj(in10,pre),R0=prR(prog),g=(P==="taper"?.6:R0)*(r>1.5&&R0<1.5?.75:r>1.3&&R0<1.3?.87:1)*ad.f,n=C>=5?Math.max(1,Math.min(tgt,Math.round(C*g/m))):tgt,c=done10();
  const full=C>=5?A>=C*g:Object.values(c).reduce((s,x)=>s+x,0)>=n;let W=0;if(full)W=C>=5?rest(all,C*g,now,ad.tau):null;const rw=acts.reduce((x,a)=>{const e=(now-(a.t+a.dur*6e4))/36e5;return a.t>now-3*D?Math.max(x,a.rec-e,(a.te>=4?48:a.te>=3?24:0)-e):x},0);
  return{A,C,r,m,n,P,ad,B:C*g,full,W,rw,tot:Object.values(c).reduce((s,x)=>s+x,0),out:c.patin+c.base,miss:acts.filter(a=>a.tss==null).length}
 }
@@ -241,7 +244,7 @@ function viz(){
 function chart(){
  const el=$("#ech"),L=LD(),D=864e5,H=36e5,now=Date.now(),ac=acts.filter(a=>LV(a)!=null&&a.t);
  if(ac.length<3){el.innerHTML='<p class="why">Il faut au moins 3 séances avec une charge lue pour tracer le graphique.</p>';return}
- const gP=P=>(P==="taper"?.6:1.15)*L.ad.f,ph=t=>phase((Date.parse(goal.d+"T08:00:00")-t)/(7*D));
+ const gP=P=>(P==="taper"?.6:prR(prog))*L.ad.f,ph=t=>phase((Date.parse(goal.d+"T08:00:00")-t)/(7*D));
  const av=k=>{const x=ac.filter(a=>a.type===k).slice(0,8);return x.length?x.reduce((s,a)=>s+LV(a),0)/x.length:L.m};
  const EP={renfo:av("renfo"),hiit:av("hiit"),marche:av("marche")};
  const S=ac.map(a=>({t:a.t,dur:a.dur||60,tss:LV(a),ep:a.ep,type:a.type}));
@@ -254,7 +257,7 @@ function chart(){
   if(C>=5&&rest(S.filter(a=>a.t<t&&t-a.t<38*D),C*gP(P),t,L.ad.tau)>0)continue;
   const T=alloc(Math.max(0,n-c.patin-c.base),P),sh=SH[P];
   const k=["marche","renfo","hiit"].filter(k=>T[k]-c[k]>0&&!S.some(a=>a.type===k&&t-a.t>=0&&t-a.t<1.7e8)&&(C<5||A+EP[k]<=C*gP(P))).sort((a,b)=>(T[b]-c[b])-(T[a]-c[a])||sh[b]-sh[a])[0];
-  if(!k)continue;const s={t,dur:60,tss:Math.round(EP[k]),ep:null,type:k,f:1};S.push(s);fut.push(s)}
+  if(!k)continue;const sz=C>=5?Math.min(EP[k]*1.5,Math.max(EP[k],(C*gP(P)-A)/Math.max(1,n-w.length))):EP[k];const s={t,dur:60,tss:Math.round(sz),ep:null,type:k,f:1};S.push(s);fut.push(s)}
  const TA=Math.min(...ac.map(a=>a.t))-D,TB=d0.getTime()+22*D;
  let pts=[now];for(let t=TA;t<=TB;t+=6*H)pts.push(t);
  S.forEach(a=>{[a.t,a.t+10*D].forEach(e=>{if(e>TA&&e<TB)pts.push(e-1,e)})});
@@ -327,6 +330,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#echs").classLis
 document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement&&$("#echs").classList.contains("efs"))efs(false)});
 addEventListener("resize",()=>{if(echDraw)echDraw()});
 function sum10(){viz()}
+{const i=$("#pg"),R=p=>prR(p).toFixed(2).replace(".",","),tx=()=>{const v=prR(prog);$("#pgx").innerHTML=prog?"+"+prog+" % par semaine de charge habituelle : charge visée ≈ "+R(prog)+" × l’habituelle"+(v>1.5?". <b style=\"color:var(--warn)\">Zone de risque</b> : surcharge probable si elle est tenue plusieurs semaines.":v>1.3?". <b style=\"color:var(--warn)\">Zone de vigilance</b> : à réserver à de courtes périodes.":" (zone de progression)."):"Maintien de forme : charge visée égale à votre charge habituelle."};i.value=prog;i.nextElementSibling.textContent=prog?"+"+prog+" %":"0 %";tx();i.oninput=()=>{prog=+i.value;i.nextElementSibling.textContent=prog?"+"+prog+" %":"0 %";st.set("pg",prog);tx();sum10()}}
 {const i=$("#nt");i.value=tgt;i.nextElementSibling.textContent=tgt;i.oninput=()=>{tgt=+i.value;i.nextElementSibling.textContent=tgt;st.set("n",tgt);sum10()}}
 function relev(ty,r){
  const P=phase(wks()),c=done10(),L=LD(),rs=[],T=alloc(Math.max(0,L.n-L.out),P);
