@@ -73,7 +73,7 @@ section.efs #ech{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid
 .ivx summary{font-size:15px;color:var(--mut);cursor:pointer}
 .kgx span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 section>h2+details.ivx{margin:-4px 0 14px}.ivx>summary{padding:2px 0}.ivx[open]{margin-bottom:16px}
-input[type=range]{pointer-events:none;touch-action:pan-y}input[type=range]::-webkit-slider-thumb{pointer-events:auto}input[type=range]::-moz-range-thumb{pointer-events:auto}</style></head><body><main>
+input[type=range]{pointer-events:none;touch-action:pan-y}input[type=range]::-webkit-slider-thumb{pointer-events:auto}input[type=range]::-moz-range-thumb{pointer-events:auto}.frm{margin:12px 0 4px;padding:10px 0 0;border-top:1px solid var(--line)}.frm .fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.frm .fh b{font:700 15px Barlow,sans-serif}.frm .fv{font:700 28px/1 "Barlow Condensed",sans-serif}.frm .fv small{font-size:15px;color:var(--mut);font-weight:500}.frm .fb{position:relative;height:8px;border-radius:4px;background:linear-gradient(to right,var(--risk) 0 35%,var(--warn) 35% 55%,var(--vig) 55% 75%,var(--prog) 75% 100%);opacity:.9;margin:8px 0 6px}.frm .fb i{position:absolute;top:-4px;width:4px;height:16px;border-radius:2px;background:var(--ink);transform:translateX(-50%)}.frm p{margin:2px 0}</style></head><body><main>
 <h1 class="apph"><span class="ti"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F5D50"/><path d="M3.6 17.6 9 9.6l2.9 4.1 2.6-3.3 5.9 7.2Z" fill="#F6F8F9"/><rect x="13.2" y="4.6" width="6.2" height="1.6" rx=".3" fill="#F6F8F9"/><rect x="13.2" y="6.4" width="6.2" height="1.6" rx=".3" fill="#D2321C"/></svg><span class="tt">App GR<small class="ver"></small></span></span><span class="hb"><button type="button" class="hbtn stb" id="stb" aria-label="Paramètres"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span>Paramètres</span></button><button type="button" class="hbtn syb" id="syb" aria-label="Synchroniser avec intervals.icu" title="Synchroniser avec intervals.icu"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 20v-4h-4"/></svg></button><button type="button" class="hbtn fsb" id="fsb" aria-label="Plein écran" title="Plein écran">⛶</button></span></h1>
 <section class="hero" aria-live="polite">
 <div class="hrow"><div class="big" id="days">–</div><div class="hr"><div class="gname" id="gname"></div><p class="sub" id="gtxt"></p></div></div>
@@ -85,6 +85,7 @@ input[type=range]{pointer-events:none;touch-action:pan-y}input[type=range]::-web
 
 <div class="sl"><label for="s2">Énergie</label><input type="range" id="s2" min="1" max="5"><span></span></div>
 <div class="sl"><label for="s3">Courbatures</label><input type="range" id="s3" min="1" max="5"><span></span></div>
+<div id="frm" class="frm"></div>
 <div id="wel" class="wel" hidden></div>
 <details class="rdx"><summary>Détails de la récupération</summary><p class="why" id="rax"></p>
 <p class="why">Récupération : calculée automatiquement à partir de votre VFC, de votre FC de repos et de votre sommeil quand la synchronisation intervals.icu est active ; sinon, le pourcentage affiché par votre montre. Vous pouvez toujours la corriger à la main. Énergie : 1 = à plat, 5 = pleine forme. Courbatures : 1 = aucune, 5 = fortes.</p></details>
@@ -290,7 +291,10 @@ function LD(){
  return{A,C,r,m,n,P,ad,B:C*g,full,W,rw,tot:Object.values(c).reduce((s,x)=>s+x,0),out:c.patin+c.base,miss:acts.filter(a=>a.tss==null).length}
 }
 function ldChip(b,r){const t=b.v<40?'':plan(b.k,r).t2;return t?'<div><b>'+t+'</b></div>':''}
-function viz(){
+function formDraw(){const el=$("#frm");if(!el)return;const r=ready(),v=r.s,a=Math.round(rec.wr*.5),e=Math.round((rec.en-1)/4*30),c=Math.round((5-rec.so)/4*20),w=a+e+c-v;
+ const vd=v<35?["repos actif conseillé","var(--risk)"]:v<55?["séance réduite à 60 %","var(--warn)"]:v<75?["séance réduite à 80 %","var(--vig)"]:["séance complète","var(--prog)"];
+ el.innerHTML='<div class="fh"><b>Niveau de forme</b><span class="fv">'+v+'<small>/100</small></span></div><div class="fb" role="img" aria-label="Niveau de forme '+v+' sur 100"><i style="left:'+Math.min(99,Math.max(1,v))+'%"></i></div><p class="why"><b style="color:'+vd[1]+'">'+vd[0][0].toUpperCase()+vd[0].slice(1)+'</b><br>Récup. '+a+'/50 · énergie '+e+'/30 · courbatures '+c+'/20'+(w>0?'<br>Montre : récupération en cours −'+w:'')+'</p>'}
+function viz(){formDraw();
  const L=LD(),P=L.P,T=alloc(Math.max(0,L.n-L.out),P),c=done10(),S=SH[P],ks=Object.keys(T).sort((a,b)=>(T[b]-c[b])-(T[a]-c[a])),r0=ready(),b=["renfo","hiit","marche"].map(k=>Object.assign({k},relev(k,r0))).sort((x,y)=>y.v-x.v)[0];
  let h='<div class="best" id="best"></div>'+lbar(L)+'<p class="kpi"><b>'+L.tot+'</b> faites · <b>'+L.n+'</b> conseillé</p>'+(L.out?'<p class="why">Dont '+c.patin+' patinoire et '+c.base+' cardio base, comptées dans le total mais non proposées.</p>':'')+'<p class="why">'+(L.C>=5?'':'Historique de charge insuffisant : le nombre conseillé reprend votre disponibilité.')+(L.miss?' '+L.miss+' séance(s) sans TSS, comptée(s) à leur EPOC : relisez le dossier dans Paramètres pour lire leur TSS.':'')+'</p>';
  h+='<div class="mix" aria-label="Répartition visée">'+Object.keys(S).map(k=>'<div style="flex:'+S[k]+';background:'+CL[k]+'">'+LT[k]+' '+Math.round(S[k]*100)+' %</div>').join("")+'</div><p class="why">Répartition visée, phase '+PN[P].toLowerCase()+'.</p>';
@@ -460,7 +464,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.47";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.48";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
