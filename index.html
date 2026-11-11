@@ -136,7 +136,7 @@ input[type=range]{pointer-events:none;touch-action:pan-y}input[type=range]::-web
 <details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details>
 <div class="row clr"><button type="button" class="ghost dang" id="clr">Vider les données d’activité</button></div><p class="why" id="clrm" aria-live="polite"></p></section>
 <section><h2 class="h2i"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><circle cx="12" cy="11.5" r="3.2"/><path d="M12 8.3v1.1M12 13.6v1.1M8.8 11.5h1.1M14.1 11.5h1.1"/><path d="M6 19v2M18 19v2"/></svg>Sauvegarde</h2>
-<p class="why">Enregistre dans un fichier tout ce que l’application utilise (séances, objectif, réglages, récupération, données de nuit), pour restaurer cet état plus tard ou sur un autre appareil. La clé intervals.icu n’est pas incluse.</p>
+<p class="why" style="margin-bottom:14px">Enregistre dans un fichier tout ce que l’application utilise (séances, objectif, réglages, récupération, données de nuit), pour restaurer cet état plus tard ou sur un autre appareil. La clé intervals.icu n’est pas incluse.</p>
 <div class="row"><button type="button" id="bks">Sauvegarder les données</button><label class="file sec2">Restaurer un fichier<input type="file" id="bkr" accept=".json,application/json"></label></div>
 <p class="why" id="bkm" aria-live="polite"></p></section>
 </div></div>
@@ -460,7 +460,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.45";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.46";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
