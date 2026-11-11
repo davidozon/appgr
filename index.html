@@ -295,7 +295,7 @@ function viz(){
  h+=ks.map(k=>{const n=Math.max(T[k],c[k]),r=Math.max(0,T[k]-c[k]);let d="";for(let i=0;i<n;i++)d+='<span class="dot'+(i<c[k]?' on':'')+'"></span>';return '<div class="tr"><b>'+LB[k]+'</b><div class="dots" style="color:'+CL[k]+'">'+(d||'–')+'</div><div class="rest">'+c[k]+'/'+T[k]+(r?' · reste '+r:' ✓')+'</div></div>'}).join("");
  h+='<div class="calh"><p class="why">Calendrier · glissez pour voir le passé et la prévision</p><span><button type="button" class="ghost cb" data-cv="-1" aria-label="Jours précédents">‹</button><button type="button" class="ghost cb" data-cv="0" aria-label="Revenir à aujourd’hui">Auj.</button><button type="button" class="ghost cb" data-cv="1" aria-label="Jours suivants">›</button></span></div><div id="cal" class="strip cal" tabindex="0" aria-label="Calendrier des séances"></div>';
  const ps=$("#cal")?$("#cal").scrollLeft:null;if(!acts.length)h='<p class="msg">Aucune séance enregistrée : ajoutez vos fichiers .fit dans <a href="#" data-open-set>Paramètres</a>.</p>'+h;$("#viz").innerHTML=h;renderCards();FUT=[];chart();drawCal(ps)}
-let FUT=[],calInit=false;
+let FUT=[],calInit=false,calUser=false;
 function calCell(dd){if(!dd.length)return"";const one=dd.length===1,a=dd[0],fu=dd.some(x=>x.f),du=dd.reduce((s,x)=>s+(x.dur||0),0),ts=dd.reduce((s,x)=>s+((x.f?x.tss:LV(x))||0),0),hasT=dd.some(x=>(x.f?x.tss:LV(x))!=null);
  const ch=one?chip(a.type):'<span class="chip cmu" title="'+dd.map(x=>TY[x.type]).join(" + ")+'">M</span>';
  return '<span class="cs">'+(fu?ch.replace(/class="chip/,'class="chip fu'):ch)+(du?'<span class="cdu">'+Math.round(du)+'<small>m</small></span>':'')+(hasT?'<span class="cts">'+Math.round(ts)+'<small>TSS</small></span>':'')+'</span>'}
@@ -304,9 +304,10 @@ function drawCal(ps){
  for(let i=-nb;i<=21;i++){const d=new Date(t0);d.setDate(d.getDate()+i);const s=d.getTime(),e=new Date(d).setDate(d.getDate()+1),dd=i>0?FUT.filter(a=>a.t>=s&&a.t<e):acts.filter(a=>a.t>=s&&a.t<e).concat(i===0?FUT.filter(a=>a.t>=s&&a.t<e):[]),m=d.getDate()===1||i===-nb;
   sp+='<div class="dy'+(i?'':' now')+(i>0?' fu':'')+'"'+(i===0?' id="calt"':'')+'><b>'+d.toLocaleDateString("fr-FR",{weekday:"short"}).slice(0,3)+'</b><span class="dn">'+d.getDate()+(m?'<small>/'+(d.getMonth()+1)+'</small>':'')+'</span>'+calCell(dd)+'</div>'}
  el.innerHTML=sp;
- const col=el.firstElementChild?el.firstElementChild.getBoundingClientRect().width+3:30,today=()=>{const c=$("#calt");el.scrollLeft=c.offsetLeft-el.offsetLeft-col*7};
- if(ps!=null&&calInit)el.scrollLeft=ps;else{today();calInit=true}
- document.querySelectorAll("[data-cv]").forEach(b=>b.onclick=()=>{const v=+b.dataset.cv;if(!v)el.scrollTo({left:$("#calt").offsetLeft-el.offsetLeft-col*7,behavior:"smooth"});else el.scrollBy({left:v*col*7,behavior:"smooth"})});
+ const col=el.firstElementChild?el.firstElementChild.getBoundingClientRect().width+3:30,today=()=>{const c=$("#calt");if(!c)return;el.style.scrollSnapType="none";el.scrollLeft+=c.getBoundingClientRect().right-el.getBoundingClientRect().right+2;requestAnimationFrame(()=>el.style.scrollSnapType="")};
+ ["pointerdown","wheel","touchstart","keydown"].forEach(t=>el.addEventListener(t,()=>{calUser=true},{passive:true}));
+ if(calUser&&ps!=null)el.scrollLeft=ps;else{today();requestAnimationFrame(today);setTimeout(today,300);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!calUser)today()})}
+ document.querySelectorAll("[data-cv]").forEach(b=>b.onclick=()=>{calUser=true;const v=+b.dataset.cv;if(!v)el.scrollBy({left:$("#calt").getBoundingClientRect().right-el.getBoundingClientRect().right+2,behavior:"smooth"});else el.scrollBy({left:v*col*7,behavior:"smooth"})});
 }
 function chart(){
  const el=$("#ech"),L=LD(),D=864e5,H=36e5,now=Date.now(),ac=acts.filter(a=>LV(a)!=null&&a.t);
@@ -400,7 +401,7 @@ async function efs(on){const s=$("#echs");s.classList.toggle("efs",on);document.
 $("#efb").onclick=()=>efs(!$("#echs").classList.contains("efs"));
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#echs").classList.contains("efs"))efs(false)});
 document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement&&$("#echs").classList.contains("efs"))efs(false)});
-addEventListener("resize",()=>{if(echDraw)echDraw();head(true)});
+addEventListener("resize",()=>{if(echDraw)echDraw();head(true);if(!calUser)drawCal()});document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!calUser)drawCal()});addEventListener("pageshow",()=>{if(!calUser)drawCal()});
 function sum10(){viz()}
 {const i=$("#pg"),R=p=>prR(p).toFixed(2).replace(".",","),tx=()=>{const z=prog<=2?["Maintien","var(--ice)","#fff"]:prog<=11?["Préconisée","var(--prog)","var(--zt)"]:["À risque","var(--risk)","#fff"];$("#pgx").innerHTML='<span class="zb" style="background:'+z[1]+';color:'+z[2]+'">'+z[0]+'</span> '+(prog<=2?(prog?"+"+prog+" % par semaine : quasi-maintien, charge visée ≈ "+R(prog)+" × l’habituelle.":"Maintien de forme : charge visée égale à votre charge habituelle."):prog<=11?"+"+prog+" % par semaine : charge visée ≈ "+R(prog)+" × l’habituelle, dans la zone de progression.":"+"+prog+" % par semaine : charge visée ≈ "+R(prog)+" × l’habituelle, au-delà de la zone de progression (1,3). Aucune étude ne valide une telle progression tenue plusieurs semaines.")};i.value=prog;$("#pgv").textContent=prog?"+"+prog+" %":"0 %";tx();i.oninput=()=>{prog=+i.value;$("#pgv").textContent=prog?"+"+prog+" %":"0 %";st.set("pg",prog);tx();sum10()}}
 {const i=$("#nt");i.value=tgt;i.nextElementSibling.textContent=tgt;i.oninput=()=>{tgt=+i.value;i.nextElementSibling.textContent=tgt;st.set("n",tgt);sum10()}}
@@ -444,7 +445,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.32";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.33";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
