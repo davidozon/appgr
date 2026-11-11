@@ -152,9 +152,9 @@ function fitSession(buf){
 
 async function ingest(files){
  const bad=[];
- for(const f of files){try{$("#st").textContent="Lecture de "+f.name+"…";if(acts.some(a=>a.src===f.name+f.size&&a.v>=5))continue;
+ for(const f of files){try{$("#st").textContent="Lecture de "+f.name+"…";if(acts.some(a=>a.src===f.name+f.size&&a.v>=6))continue;
   const S=fitSession(await f.arrayBuffer()),asc=S[22]!=null?Math.round(S[22]):null,dist=(S[9]||0)/100,t=(S[2]+631065600)*1000;
-  const a={src:f.name+f.size,id:String(Math.round(t/1000)),t:t,dur:Math.round((S[7]||0)/60000),kcal:S[11]||0,rec:(S.recovery_time||0)/3600,ep:Math.round((S.peak_epoc||0)*10)/10,tss:S[35]!=null?Math.round(S[35])/10:null,te:(S[24]||0)/10,hz:Math.round((S[65]||[]).slice(2).reduce((s,x)=>s+(x||0),0)/6e3)/10,hr:S[16]||null,asc:asc,v:5,fm:null,z2:null,type:/^Gym/i.test(f.name)?"renfo":/^(Treadmill|Hiking|Mountaineering)/i.test(f.name)?"marche":/^IceSkating/i.test(f.name)?"patin":asc>150?"marche":(dist>1500?"base":"renfo")};
+  const a={src:f.name+f.size,id:String(Math.round(t/1000)),t:t,dur:Math.round((S[8]||S[7]||0)/60000),kcal:S[11]||0,rec:(S.recovery_time||0)/3600,ep:Math.round((S.peak_epoc||0)*10)/10,tss:S[35]!=null?Math.round(S[35])/10:null,te:(S[24]||0)/10,hz:Math.round((S[65]||[]).slice(2).reduce((s,x)=>s+(x||0),0)/6e3)/10,hr:S[16]||null,asc:asc,v:6,fm:null,z2:null,type:/^Gym/i.test(f.name)?"renfo":/^(Treadmill|Hiking|Mountaineering)/i.test(f.name)?"marche":/^IceSkating/i.test(f.name)?"patin":asc>150?"marche":(dist>1500?"base":"renfo")};
   if(isNaN(a.t)||!a.dur)throw 0;
   const o=acts.find(x=>x.id===a.id);if(o){a.type=o.type;if(o.kg!=null)a.kg=o.kg}acts=acts.filter(x=>x.id!==a.id);acts.push(a)}catch(x){bad.push(f.name)}}
  $("#err").textContent=bad.length?"Fichier illisible : "+bad.join(", ")+". Il faut un export Suunto au format .fit.":"";
