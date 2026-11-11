@@ -51,12 +51,13 @@ html.lock,html.lock body{overflow:hidden}
 .cal{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 21px)/8);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;padding-bottom:2px}.cal::-webkit-scrollbar{display:none}.cal .dy{scroll-snap-align:start}.cal .dy.fu{border-style:dashed;background:none}.cal .dy i{display:block;font-style:normal;font-size:10px;color:var(--pine);font-weight:500;line-height:1}.cs{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin-top:4px;line-height:1.1;text-align:center}.cs .chip{margin:0 auto}.cdu,.cts{display:block;width:100%;text-align:center;white-space:nowrap}.cdu{font-size:12px;font-weight:400;color:var(--ink);margin-top:5px}.cts{font-size:11px;font-weight:600;color:var(--mut);margin-top:1px}.cdu small,.cts small{font-size:8px;font-weight:500;margin-left:2px}.chip.fu{outline:1.5px dashed var(--ink);outline-offset:1px;opacity:.85}.calh{display:flex;justify-content:space-between;align-items:center;gap:6px}.calh span{display:flex;gap:4px;flex:none}:root button.cb{color:var(--ink);padding:2px 8px;font-size:14px;min-width:30px;height:30px}.cal:focus-visible{outline:3px solid var(--ice)}
 .apph{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -16px 6px;padding:calc(env(safe-area-inset-top,0px) + 8px) 16px 8px;background:var(--bg);box-shadow:0 1px 0 var(--line);font:700 28px/1 "Barlow Condensed",sans-serif}.apph .ti{display:flex;align-items:center;gap:.4em;min-width:0}.apph .ti svg{width:1.55em;height:1.55em;flex:none}.apph .tt{display:flex;flex-direction:column;line-height:1;white-space:nowrap}.apph .ver{font:500 12px Barlow,sans-serif;color:var(--mut);margin-top:3px;font-variant-numeric:tabular-nums}.apph .hb{display:flex;gap:8px;flex:none}:root button.hbtn{height:42px;padding:0 12px;font:500 15px Barlow,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px}:root button.fsb{font-size:20px;min-width:42px;padding:0}
 #set{position:fixed;inset:0;z-index:90;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}#set[hidden]{display:none}#set .sw{max-width:720px;margin:0 auto;padding:0 16px 40px}html.slock,html.slock body{overflow:hidden}
+.hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;padding:6px 0 4px}.hero .big{font-size:clamp(48px,14vw,84px);line-height:.85;letter-spacing:-1px}.hero .hr{min-width:0}.hero .sub{margin:0 0 6px;font-size:14px;line-height:1.25}.hero .bar{height:26px}.hero .bar div+div{border-left:1px solid var(--line)}.hero .bar div{padding:0 3px;font-size:10.5px;min-width:0;overflow:hidden;text-overflow:clip;justify-content:center}.hero .bar div.on{font-weight:700;min-width:max-content}.hero .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style></head><body><main>
 <h1 class="apph"><span class="ti"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F5D50"/><path d="M3.6 17.6 9 9.6l2.9 4.1 2.6-3.3 5.9 7.2Z" fill="#F6F8F9"/><rect x="13.2" y="4.6" width="6.2" height="1.6" rx=".3" fill="#F6F8F9"/><rect x="13.2" y="6.4" width="6.2" height="1.6" rx=".3" fill="#D2321C"/></svg><span class="tt">App GR<small class="ver" id="ver"></small></span></span><span class="hb"><button type="button" class="hbtn" id="stb">Paramètres</button><button type="button" class="hbtn fsb" id="fsb" aria-label="Plein écran" title="Plein écran">⛶</button></span></h1>
 <section class="hero" aria-live="polite">
 <div class="big" id="days">–</div>
-<p class="sub" id="gtxt"></p>
-<div class="bar" id="bar" role="img" aria-label="Phases de préparation"></div>
+<div class="hr"><p class="sub" id="gtxt"></p>
+<div class="bar" id="bar" role="img" aria-label="Phases de préparation"></div></div>
 </section>
 
 <section><h2>Objectif</h2>
@@ -117,15 +118,15 @@ const TY={marche:"Marche inclinée",hiit:"Cardio HIT",renfo:"Renforcement",patin
 if(!goal.m20){goal.kmax=20;goal.m20=1;st.set("g",goal)}
 const wks=()=>(Date.parse(goal.d+"T08:00:00")-Date.now())/(7*864e5);
 function phase(w){return w>16?"base":w>6?"build":w>2?"spec":"taper"}
-const PN={base:"Fondation",build:"Construction",spec:"Spécifique",taper:"Affûtage"};
+const PS={base:"Fond.",build:"Constr.",spec:"Spécif.",taper:"Affût."},PN={base:"Fondation",build:"Construction",spec:"Spécifique",taper:"Affûtage"};
 function head(live){
  if(!live){$("#gn").value=goal.n;$("#gd").value=goal.d}dl();
  const w=wks(),d=Math.ceil(w*7);
  if(d<0){$("#days").textContent="Terminé";$("#gtxt").textContent=goal.n;$("#bar").innerHTML="";return}
  $("#days").textContent="J−"+d;
- $("#gtxt").textContent=goal.n+", le "+new Date(goal.d+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"})+" · "+Math.round(w)+" semaines";
+ $("#gtxt").textContent=goal.n+" · "+new Date(goal.d+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"})+" · "+Math.round(w)+" sem.";$("#gtxt").title=Math.round(w)+" semaines";
  const m=Math.min,sg=[["base",Math.max(0,w-16)],["build",m(w,16)-m(w,6)],["spec",m(w,6)-m(w,2)],["taper",m(w,2)]],cur=phase(w);
- $("#bar").innerHTML=sg.filter(x=>x[1]>0.05).map(x=>`<div class="${x[0]==cur?"on":""}" style="flex:${x[1]}">${PN[x[0]]}</div>`).join("");
+ const tot=sg.reduce((a,x)=>a+x[1],0);$("#bar").innerHTML=sg.filter(x=>x[1]>0.05).map(x=>`<div class="${x[0]==cur?"on":""}" style="flex:${x[1]}" title="${PN[x[0]]}">${x[0]==cur?PN[x[0]]:x[1]/tot>=.2?PS[x[0]]:PN[x[0]][0]}</div>`).join("");
 }
 function list(){
  const el=$("#list");$("#lc").textContent=acts.length;
@@ -390,7 +391,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.2";$("#ver").textContent=VER;
+const VER="v261111.3";$("#ver").textContent=VER;
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
