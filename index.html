@@ -49,7 +49,10 @@ section.efs .esh{margin-bottom:4px}section.efs #ech{display:grid;grid-template-c
 @media (orientation:portrait){section.efs{inset:auto;top:0;left:100vw;width:100vh;height:100vw;width:100dvh;height:100dvw;left:100dvw;transform-origin:0 0;transform:rotate(90deg)}}
 html.lock,html.lock body{overflow:hidden}
 .cal{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 21px)/8);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;padding-bottom:2px}.cal::-webkit-scrollbar{display:none}.cal .dy{scroll-snap-align:start}.cal .dy.fu{border-style:dashed;background:none}.cal .dy i{display:block;font-style:normal;font-size:10px;color:var(--pine);font-weight:500;line-height:1}.cs{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin-top:4px;line-height:1.1;text-align:center}.cs .chip{margin:0 auto}.cdu,.cts{display:block;width:100%;text-align:center;white-space:nowrap}.cdu{font-size:12px;font-weight:400;color:var(--ink);margin-top:5px}.cts{font-size:11px;font-weight:600;color:var(--mut);margin-top:1px}.cdu small,.cts small{font-size:8px;font-weight:500;margin-left:2px}.chip.fu{outline:1.5px dashed var(--ink);outline-offset:1px;opacity:.85}.calh{display:flex;justify-content:space-between;align-items:center;gap:6px}.calh span{display:flex;gap:4px;flex:none}:root button.cb{color:var(--ink);padding:2px 8px;font-size:14px;min-width:30px;height:30px}.cal:focus-visible{outline:3px solid var(--ice)}
+.apph{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -16px 6px;padding:max(8px,env(safe-area-inset-top)) 16px 8px;background:var(--bg);box-shadow:0 1px 0 var(--line);font:700 28px/1 "Barlow Condensed",sans-serif}.apph .ti{display:flex;align-items:center;gap:.4em;min-width:0}.apph .ti svg{width:1.55em;height:1.55em;flex:none}.apph .tt{display:flex;flex-direction:column;line-height:1;white-space:nowrap}.apph .ver{font:500 12px Barlow,sans-serif;color:var(--mut);margin-top:3px;font-variant-numeric:tabular-nums}.apph .hb{display:flex;gap:8px;flex:none}:root button.hbtn{height:42px;padding:0 12px;font:500 15px Barlow,sans-serif;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px}:root button#fsb{font-size:20px;min-width:42px;padding:0}
+#set{position:fixed;inset:0;z-index:90;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}#set[hidden]{display:none}#set .sw{max-width:720px;margin:0 auto;padding:0 16px 40px}html.slock,html.slock body{overflow:hidden}
 </style></head><body><main>
+<h1 class="apph"><span class="ti"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F5D50"/><path d="M3.6 17.6 9 9.6l2.9 4.1 2.6-3.3 5.9 7.2Z" fill="#F6F8F9"/><rect x="13.2" y="4.6" width="6.2" height="1.6" rx=".3" fill="#F6F8F9"/><rect x="13.2" y="6.4" width="6.2" height="1.6" rx=".3" fill="#D2321C"/></svg><span class="tt">App GR<small class="ver" id="ver"></small></span></span><span class="hb"><button type="button" class="hbtn" id="stb">Paramètres</button><button type="button" class="hbtn" id="fsb" aria-label="Plein écran" title="Plein écran">⛶</button></span></h1>
 <section class="hero" aria-live="polite">
 <div class="big" id="days">–</div>
 <p class="sub" id="gtxt"></p>
@@ -61,13 +64,6 @@ html.lock,html.lock body{overflow:hidden}
 <div class="sl dlr"><label for="gk1">Charge du sac</label><div class="dl"><div class="tk"></div><div class="fl" id="dfill"></div><input type="range" id="gk1" min="0" max="25" step="1" aria-label="Charge minimale pour la préparation, en kilos"><input type="range" id="gk2" min="0" max="25" step="1" aria-label="Charge le jour de l’objectif, en kilos"></div><span id="gkv"></span></div>
 <p class="why">Curseur de gauche : charge minimum pour les entraînements<br>Curseur de droite : charge le jour de l’objectif</p></section>
 
-<section><h2>Fichiers FIT</h2>
-<div class="row"><button id="pk">Choisir le dossier</button><button class="sec" id="pk2">Changer</button></div>
-<p class="why" id="dn"></p><p class="why" id="st"></p>
-<label class="file">Ou ajouter des fichiers .fit<input type="file" id="ff" accept=".fit" multiple></label>
-<p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours.</p>
-<p class="msg" id="err"></p>
-<details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details></section>
 
 
 
@@ -104,6 +100,15 @@ html.lock,html.lock body{overflow:hidden}
 <li><b>Charge proposée</b> (marche inclinée et HIT) : elle part du minimum réglé (curseur de gauche) à 28 semaines de l’objectif et monte régulièrement jusqu’au maximum (curseur de droite) à 4 semaines, puis passe à 60 % du maximum en affûtage, sans descendre sous le minimum. Elle est réduite si la récupération est moyenne ou basse, et limitée à +2 kg par rapport à la charge la plus lourde enregistrée sur vos marches des 28 derniers jours. La marche courte reprend 60 % de la charge et le HIT 40 %, sans jamais passer sous le minimum. Ces proportions sont mes choix, non validés.</li></ul>
 <p class="why">Seuils et volumes sont des choix raisonnables, non validés par un professionnel. Ce n’est pas un avis médical : en cas de douleur, ne forcez pas.</p></details></section>
 </main>
+<div id="set" hidden role="dialog" aria-modal="true" aria-labelledby="sett"><div class="sw"><div class="apph sth"><span class="ti"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F5D50"/><path d="M3.6 17.6 9 9.6l2.9 4.1 2.6-3.3 5.9 7.2Z" fill="#F6F8F9"/><rect x="13.2" y="4.6" width="6.2" height="1.6" rx=".3" fill="#F6F8F9"/><rect x="13.2" y="6.4" width="6.2" height="1.6" rx=".3" fill="#D2321C"/></svg><span class="tt" id="sett">Paramètres<small class="ver">App GR</small></span></span><span class="hb"><button type="button" class="hbtn" id="stc">Fermer</button></span></div>
+<section><h2>Fichiers FIT</h2>
+<div class="row"><button id="pk">Choisir le dossier</button><button class="sec" id="pk2">Changer</button></div>
+<p class="why" id="dn"></p><p class="why" id="st"></p>
+<label class="file">Ou ajouter des fichiers .fit<input type="file" id="ff" accept=".fit" multiple></label>
+<p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours.</p>
+<p class="msg" id="err"></p>
+<details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details></section>
+</div></div>
 <script>
 const $=s=>document.querySelector(s),mem={};
 const st={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return k in mem?mem[k]:d}},set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -237,11 +242,11 @@ function LD(){
 function ldChip(b,r){const t=b.v<40?'':plan(b.k,r).t2;return t?'<div><b>'+t+'</b></div>':''}
 function viz(){
  const L=LD(),P=L.P,T=alloc(Math.max(0,L.n-L.out),P),c=done10(),S=SH[P],ks=Object.keys(T).sort((a,b)=>(T[b]-c[b])-(T[a]-c[a])),r0=ready(),b=["renfo","hiit","marche"].map(k=>Object.assign({k},relev(k,r0))).sort((x,y)=>y.v-x.v)[0];
- let h='<div class="best"><small>Séance la plus pertinente maintenant</small><div><b>'+(b.v<40?'Repos actif':LB[b.k])+'</b><span>'+b.v+' %</span></div>'+ldChip(b,r0)+'<p class="why">'+(b.v<40?'Aucun type ne ressort clairement. ':'')+b.rs.join(' · ')+'</p></div>'+lbar(L)+'<p class="kpi"><b>'+L.tot+'</b> faites · <b>'+L.n+'</b> conseillé</p>'+(L.out?'<p class="why">Dont '+c.patin+' patinoire et '+c.base+' cardio base, comptées dans le total mais non proposées.</p>':'')+'<p class="why">'+(L.C>=5?'':'Historique de charge insuffisant : le nombre conseillé reprend votre disponibilité.')+(L.miss?' '+L.miss+' séance(s) sans TSS, comptée(s) à leur EPOC : relisez le dossier ou réimportez les fichiers .fit pour lire leur TSS.':'')+'</p>';
+ let h='<div class="best"><small>Séance la plus pertinente maintenant</small><div><b>'+(b.v<40?'Repos actif':LB[b.k])+'</b><span>'+b.v+' %</span></div>'+ldChip(b,r0)+'<p class="why">'+(b.v<40?'Aucun type ne ressort clairement. ':'')+b.rs.join(' · ')+'</p></div>'+lbar(L)+'<p class="kpi"><b>'+L.tot+'</b> faites · <b>'+L.n+'</b> conseillé</p>'+(L.out?'<p class="why">Dont '+c.patin+' patinoire et '+c.base+' cardio base, comptées dans le total mais non proposées.</p>':'')+'<p class="why">'+(L.C>=5?'':'Historique de charge insuffisant : le nombre conseillé reprend votre disponibilité.')+(L.miss?' '+L.miss+' séance(s) sans TSS, comptée(s) à leur EPOC : relisez le dossier dans Paramètres pour lire leur TSS.':'')+'</p>';
  h+='<div class="mix" aria-label="Répartition visée">'+Object.keys(S).map(k=>'<div style="flex:'+S[k]+';background:'+CL[k]+'">'+LT[k]+' '+Math.round(S[k]*100)+' %</div>').join("")+'</div><p class="why">Répartition visée, phase '+PN[P].toLowerCase()+'.</p>';
  h+=ks.map(k=>{const n=Math.max(T[k],c[k]),r=Math.max(0,T[k]-c[k]);let d="";for(let i=0;i<n;i++)d+='<span class="dot'+(i<c[k]?' on':'')+'"></span>';return '<div class="tr"><b>'+LB[k]+'</b><div class="dots" style="color:'+CL[k]+'">'+(d||'–')+'</div><div class="rest">'+c[k]+'/'+T[k]+(r?' · reste '+r:' ✓')+'</div></div>'}).join("");
- h+='<div class="calh"><p class="why">Calendrier · glissez pour voir le passé et la prévision</p><span><button type="button" class="ghost cb" data-cv="-1" aria-label="Jours précédents">‹</button><button type="button" class="ghost cb" data-cv="0" aria-label="Revenir à aujourd’hui">Auj.</button><button type="button" class="ghost cb" data-cv="1" aria-label="Jours suivants">›</button></span></div><div id="cal" class="strip cal" tabindex="0" aria-label="Calendrier des séances"></div><p class="why">M marche inclinée · H HIT · R renforcement · P patinoire · C cardio base · contour pointillé : séance prévue</p>';
- const ps=$("#cal")?$("#cal").scrollLeft:null;$("#viz").innerHTML=h;renderCards();FUT=[];chart();drawCal(ps)}
+ h+='<div class="calh"><p class="why">Calendrier · glissez pour voir le passé et la prévision</p><span><button type="button" class="ghost cb" data-cv="-1" aria-label="Jours précédents">‹</button><button type="button" class="ghost cb" data-cv="0" aria-label="Revenir à aujourd’hui">Auj.</button><button type="button" class="ghost cb" data-cv="1" aria-label="Jours suivants">›</button></span></div><div id="cal" class="strip cal" tabindex="0" aria-label="Calendrier des séances"></div><p class="why">M marche inclinée · H HIT · R renforcement · P patinoire<br>C cardio base</p>';
+ const ps=$("#cal")?$("#cal").scrollLeft:null;if(!acts.length)h='<p class="msg">Aucune séance enregistrée : ajoutez vos fichiers .fit dans <a href="#" data-open-set>Paramètres</a>.</p>'+h;$("#viz").innerHTML=h;renderCards();FUT=[];chart();drawCal(ps)}
 let FUT=[],calInit=false;
 function drawCal(ps){
  const el=$("#cal");if(!el)return;const t0=new Date();t0.setHours(0,0,0,0);const T=t0.getTime(),D=864e5,first=acts.length?Math.min(...acts.map(a=>a.t)):T,nb=Math.min(90,Math.max(9,Math.ceil((T-first)/D)+1));let sp="";
@@ -333,10 +338,10 @@ function chart(){
   if(k==="ArrowLeft"||k==="ArrowRight"){e.preventDefault();const r=k==="ArrowRight",nx=r?dots.find(a=>a.t>EV.c+6e4):[...dots].reverse().find(a=>a.t<EV.c-6e4);EV.c=nx?nx.t:EV.c+(r?D:-D);req()}
   else if(k==="+"||k==="="||k==="-"){e.preventDefault();EV.s*=k==="-"?1.4:1/1.4;req()}else if(k==="Home"){e.preventDefault();EV.c=now;req()}});
  echDraw=()=>{clamp();draw()};draw()}
-let EV=null,echDraw=null;
+let EV=null,echDraw=null,efsFS=false;
 async function efs(on){const s=$("#echs");s.classList.toggle("efs",on);document.documentElement.classList.toggle("lock",on);$("#efb").setAttribute("aria-label",on?"Quitter le plein écran":"Plein écran");
- if(on){try{if(document.documentElement.requestFullscreen&&!document.fullscreenElement)await document.documentElement.requestFullscreen()}catch(e){}try{await screen.orientation.lock("landscape")}catch(e){}}
- else{try{screen.orientation.unlock()}catch(e){}try{if(document.fullscreenElement)await document.exitFullscreen()}catch(e){}}
+ if(on){efsFS=false;try{if(document.documentElement.requestFullscreen&&!document.fullscreenElement){await document.documentElement.requestFullscreen();efsFS=true}}catch(e){}try{await screen.orientation.lock("landscape")}catch(e){}}
+ else{try{screen.orientation.unlock()}catch(e){}try{if(efsFS&&document.fullscreenElement)await document.exitFullscreen()}catch(e){}efsFS=false;}
  if(echDraw)echDraw()}
 $("#efb").onclick=()=>efs(!$("#echs").classList.contains("efs"));
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#echs").classList.contains("efs"))efs(false)});
@@ -385,5 +390,11 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
+const VER="v261111.1";$("#ver").textContent=VER;
+const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
+$("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
+document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#set").hidden)setOpen(false)});
+$("#fsb").onclick=async()=>{const d=document,el=d.documentElement;try{if(d.fullscreenElement||d.webkitFullscreenElement)await(d.exitFullscreen||d.webkitExitFullscreen).call(d);else await(el.requestFullscreen||el.webkitRequestFullscreen).call(el)}catch(e){$("#fsb").title="Plein écran indisponible ici"}};
 head();list();sum10();
 </script></body></html>
