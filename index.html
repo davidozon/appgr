@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prochaine séance (FIT)</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8ECEE;--card:#F6F8F9;--ink:#14212B;--mut:#5A6B76;--pine:#2F5D50;--ice:#4E86B0;--warn:#B4492F;--line:#CBD3D8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11181D;--card:#1A242B;--ink:#E6ECEF;--mut:#93A3AD;--pine:#6FB39E;--ice:#7DB0D6;--warn:#E08466;--line:#2B3841;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11181D;--card:#1A242B;--ink:#E6ECEF;--mut:#93A3AD;--pine:#6FB39E;--ice:#7DB0D6;--warn:#E08466;--line:#2B3841;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Barlow,system-ui,sans-serif}
+main{position:relative;max-width:720px;margin:0 auto;padding:8px 16px 48px}
+h1,h2,.big{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;margin:0}
+h2{font-size:22px;margin:0 0 10px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:14px 0}
+.hero{background:none;border:0;padding:0 0 4px;margin-top:0}
+.big{font-size:clamp(76px,22vw,128px);line-height:.9;color:var(--pine);letter-spacing:-1px}
+.sub{color:var(--mut);margin:6px 0 14px}
+.bar{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.bar div{display:flex;align-items:center;padding:0 6px;font-size:12px;font-weight:500;white-space:nowrap;min-width:max-content;background:var(--card);color:var(--mut)}
+.bar div.on{background:var(--pine);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bar div.on{color:#10201B}}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text],input[type=date],input[type=number],select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 10px;min-width:0}
+input[type=text]{flex:1 1 150px}.sl.dlr{grid-template-columns:110px 1fr 84px}.sl.dlr span:last-child{white-space:nowrap}.dl{position:relative;height:28px}.dl .tk,.dl .fl{position:absolute;top:12px;height:4px;border-radius:2px}.dl .tk{left:0;right:0;background:var(--line)}.dl .fl{background:var(--pine)}.dl input{position:absolute;left:0;top:0;width:100%;height:28px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}.dl input:focus-visible{outline:none}.dl input::-webkit-slider-runnable-track{background:none;height:28px}.dl input::-moz-range-track{background:none}.dl input::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--pine);border:3px solid var(--card);margin-top:3px;cursor:pointer}.dl input::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--pine);border:3px solid var(--card);cursor:pointer}.dl input:focus-visible::-webkit-slider-thumb{outline:3px solid var(--ice)}.dl input:focus-visible::-moz-range-thumb{outline:3px solid var(--ice)}
+button,.file{font:500 16px Barlow,sans-serif;background:var(--pine);color:#fff;border:0;border-radius:6px;padding:10px 16px;cursor:pointer;display:inline-block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button,:root:not([data-theme="light"]) .file{color:#10201B}}
+button.ghost{background:none;color:var(--mut);padding:4px 8px;border:1px solid var(--line)}
+:focus-visible{outline:3px solid var(--ice);outline-offset:2px}
+.file input{position:absolute;opacity:0;width:1px;height:1px}
+.file:focus-within{outline:3px solid var(--ice);outline-offset:2px}
+.act{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}@media (max-width:560px){.act{grid-template-columns:1fr auto auto}.act>div:first-child{grid-column:1/-1}}
+.act small{color:var(--mut);display:block}
+.act button.ghost{font:700 24px/1 Barlow,sans-serif;color:var(--mut);border-color:var(--mut);min-width:38px;height:38px;padding:0}
+.sl{display:grid;grid-template-columns:110px 1fr 48px;gap:10px;align-items:center;margin:8px 0}
+.sl input{width:100%;accent-color:var(--pine)}
+.sl span:last-child{text-align:right;font-weight:500}
+.msg{color:var(--warn);margin:8px 0 0}
+.res h2{font-size:22px}.card{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}.card.top{border:0;padding-top:0}.pc{font:700 44px/1 "Barlow Condensed",sans-serif;color:var(--mut)}.top .pc{color:var(--pine)}.pc small{font-size:20px}.pc span{display:block;font:400 13px Barlow,sans-serif;color:var(--mut)}.card h2{margin:0 0 4px}
+.res ul{padding-left:20px;margin:8px 0}
+.why{color:var(--mut);font-size:15px;margin:4px 0}
+.tbl{overflow-x:auto}.how ul{padding-left:20px;margin:8px 0}.how p{margin:8px 0}.kpi{margin:6px 0;font-size:16px}.kpi b{font:700 28px "Barlow Condensed",sans-serif;color:var(--pine)}.mix{display:flex;height:28px;border-radius:6px;overflow:hidden;margin:10px 0 4px}.mix div{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--bg);white-space:nowrap;overflow:hidden;min-width:0}.tr{display:grid;grid-template-columns:128px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}.dots{display:flex;gap:4px;flex-wrap:wrap}.dot{width:16px;height:16px;border-radius:50%;border:2px solid currentColor}.dot.on{background:currentColor}.rest{font-weight:500;text-align:right;white-space:nowrap}.strip{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin:6px 0}.dy{text-align:center;font-size:13px;min-height:64px;border:1px solid var(--line);border-radius:6px;padding:3px 0}.dy.now{border:2px solid var(--pine)}.best{border:1px solid var(--line);border-left:6px solid var(--pine);border-radius:8px;padding:10px 12px;margin:6px 0 12px;background:var(--bg)}.best small{color:var(--mut)}.best b{font:700 30px "Barlow Condensed",sans-serif;color:var(--pine)}.best span{font:700 22px "Barlow Condensed",sans-serif;color:var(--mut);margin-left:8px}summary{cursor:pointer;padding:6px 0;font-size:17px}:root button.sec{background:none;color:var(--pine);border:2px solid var(--pine);padding:8px 14px}.sub{padding-right:0}.lt{position:relative;height:16px;background:var(--bg);border:1px solid var(--line);border-radius:8px;margin:16px 0 8px}.lf{height:100%;border-radius:6px}.lk{position:absolute;z-index:2;top:-7px;width:0;height:0;margin-left:-8px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid var(--ink)}.lk.lh{top:-4px;bottom:-4px;width:4px;height:auto;margin:0;border:0;border-radius:2px;background:var(--ink);transform:translateX(-50%)}.rt{border:1px solid var(--line);border-left:6px solid var(--warn);border-radius:8px;padding:10px 12px;margin:8px 0;background:var(--bg)}.rt small{color:var(--mut)}.rv{font:700 26px/1.1 "Barlow Condensed",sans-serif;color:var(--warn)}.rv b{font-size:40px}.rv span{font-size:18px;margin-left:5px;color:var(--ink)}.rt p{margin:4px 0}.lb p{margin:4px 0 8px}.dy b{display:block;font-size:11px;font-weight:500;color:var(--mut)}.chip{display:block;margin:3px auto 0;width:22px;height:22px;border-radius:50%;color:var(--bg);font:500 12px/22px Barlow,sans-serif;text-align:center}
+</style></head><body><main>
+<section class="hero" aria-live="polite">
+<div class="big" id="days">–</div>
+<p class="sub" id="gtxt"></p>
+<div class="bar" id="bar" role="img" aria-label="Phases de préparation"></div>
+</section>
+
+<section><h2>Objectif</h2>
+<div class="row"><input type="text" id="gn" aria-label="Nom de l’objectif" placeholder="Nom de l’objectif"><input type="date" id="gd" aria-label="Date de l’objectif"></div>
+<div class="sl dlr"><label for="gk1">Charge du sac</label><div class="dl"><div class="tk"></div><div class="fl" id="dfill"></div><input type="range" id="gk1" min="0" max="25" step="1" aria-label="Charge minimale pour la préparation, en kilos"><input type="range" id="gk2" min="0" max="25" step="1" aria-label="Charge le jour de l’objectif, en kilos"></div><span id="gkv"></span></div>
+<p class="why">Curseur de gauche : charge minimum pour les entraînements<br>Curseur de droite : charge le jour de l’objectif</p></section>
+
+<section><h2>Fichiers FIT</h2>
+<div class="row"><button id="pk">Choisir le dossier</button><button class="sec" id="pk2">Changer</button></div>
+<p class="why" id="dn"></p><p class="why" id="st"></p>
+<label class="file">Ou ajouter des fichiers .fit<input type="file" id="ff" accept=".fit" multiple></label>
+<p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours.</p>
+<p class="msg" id="err"></p>
+<details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details></section>
+
+
+
+
+
+<section><h2>Conditions physiques</h2>
+<div class="sl"><label for="s1">Récupération</label><input type="range" id="s1" min="0" max="100"><span></span></div>
+
+<div class="sl"><label for="s2">Énergie</label><input type="range" id="s2" min="1" max="5"><span></span></div>
+<div class="sl"><label for="s3">Courbatures</label><input type="range" id="s3" min="1" max="5"><span></span></div>
+<p class="why">Récupération : le pourcentage affiché par votre montre. Énergie : 1 = à plat, 5 = pleine forme. Courbatures : 1 = aucune, 5 = fortes.</p>
+</section>
+<section><h2>Séances sur 10 jours</h2>
+<div class="sl"><label for="nt">Disponibilité</label><input type="range" id="nt" min="1" max="10"><span></span></div>
+<p class="why">Nombre maximum de séances possibles sur 10 jours glissants. Le nombre conseillé tient compte de cette limite et de votre charge.</p>
+<div id="viz"></div></section>
+
+<section class="res"><h2>Séances proposées</h2><div id="cards"></div></section>
+<section class="how"><details><summary><b>Comment sont choisies les séances</b></summary>
+<p><b>Récupération (sur 100)</b> : 50 % le pourcentage de votre montre, 30 % l’énergie, 20 % les courbatures. Si la montre annonçait encore des heures de récupération après la dernière séance, le score baisse un peu.</p>
+<p><b>Phase</b>, selon le temps restant : fondation (plus de 16 semaines), construction (6 à 16), spécifique (2 à 6), affûtage (moins de 2). Vous indiquez votre disponibilité sur 10 jours ; le nombre conseillé en découle (voir plus bas) et la phase en fixe la répartition (marche inclinée / renforcement / HIT) : fondation 30/30/40 %, construction 40/25/35 %, spécifique 55/20/25 %, affûtage 60/20/20 %. Ces parts sont mes choix, pas des valeurs validées.</p>
+<p><b>Pertinence (%)</b> : on part de 60. Elle monte si le type manque par rapport à la répartition recommandée sur 10 jours. Elle baisse si votre récupération est sous le niveau demandé (60 pour le renfo, 70 pour le HIT, 45 pour la marche), en cas de courbatures, ou si le même type date de moins de 48 h. Le HIT perd des points en affûtage ou si la charge récente est élevée (ratio supérieur à 1,3). Tous les types en perdent si la charge conseillée sur 10 jours est atteinte. La marche inclinée en gagne en phase spécifique. C’est un score de décision, pas une probabilité.</p>
+<p><b>Nombre de séances conseillé</b> : la charge d’une séance est son EPOC, lu dans vos fichiers Suunto (le champ de charge d’entraînement de vos fichiers est vide). On compare la charge des 10 derniers jours à votre charge habituelle, soit la moyenne par 10 jours sur les 28 jours précédents. Le budget visé est cette charge habituelle +15 % (−40 % en affûtage), ramené à +0 % si le ratio dépasse 1,3 et −14 % au-delà de 1,5. Le nombre conseillé est ce budget divisé par la charge moyenne d’une séance, plafonné par votre disponibilité. Toutes vos séances enregistrées comptent dans le total, patinoire et cardio base comprises. Ces repères sont courants, mais non validés pour vous.</p>
+<p><b>Temps avant une séance pertinente</b> : quand la charge des 10 jours atteint ou dépasse le repère conseillé, la page estime la fatigue restante : chaque séance compte par son EPOC, qui s’atténue avec le temps depuis la fin de la séance, à une vitesse propre à vous (plus lente si la montre annonce plus de récupération par unité d’EPOC qu’à l’habitude). Le temps affiché est celui où cette fatigue repasse sous le niveau d’équilibre correspondant au repère. Il est comparé à la récupération annoncée par la montre pour les séances des 3 derniers jours, et à un minimum de 24 h après une séance d’effet d’entraînement 3 ou plus (48 h à partir de 4) : la page garde le plus long. Ces durées sont des repères non validés. C’est une estimation : elle suppose qu’aucune autre séance n’est faite et que le repère ne change pas.</p>
+<ul><li><b>Renforcement</b> : il prolonge vos séances habituelles (haut du corps). Sur un trek avec sac, chaînes et passages d’escalade, le dos, les épaules, les bras et le gainage comptent ; les jambes sont déjà travaillées par la marche inclinée.</li>
+<li><b>Patinoire et cardio base</b> : comptées dans vos séances faites, jamais proposées. La marche inclinée tient lieu d’endurance de base.</li>
+<li><b>HIT</b> : format court de moins de 20 min, avec marche à 20 %, course de 60 à 90 s à 7 km/h et 8 %, récupération à 5 %. Le nombre de blocs dépend de la phase et de la récupération. Réglages repris de votre tapis (3 km/h au-delà de 12 %).</li>
+<li><b>Marche inclinée</b> : D+ = vitesse × pente. À 3 km/h et 20-24 %, comptez 10 à 12 m de D+ par minute, d’où la durée. La séance longue est proposée si aucune marche à 400 m de D+ ou plus n’a eu lieu sur 7 jours et si la récupération est d’au moins 60 ; sinon la courte (environ 200 m).</li>
+<li><b>Charge proposée</b> (marche inclinée et HIT) : elle part du minimum réglé (curseur de gauche) à 28 semaines de l’objectif et monte régulièrement jusqu’au maximum (curseur de droite) à 4 semaines, puis passe à 60 % du maximum en affûtage, sans descendre sous le minimum. Elle est réduite si la récupération est moyenne ou basse, et limitée à +2 kg par rapport à la charge la plus lourde enregistrée sur vos marches des 28 derniers jours. La marche courte reprend 60 % de la charge et le HIT 40 %, sans jamais passer sous le minimum. Ces proportions sont mes choix, non validés.</li></ul>
+<p class="why">Seuils et volumes sont des choix raisonnables, non validés par un professionnel. Ce n’est pas un avis médical : en cas de douleur, ne forcez pas.</p></details></section>
+</main>
+<script>
+const $=s=>document.querySelector(s),mem={};
+const st={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return k in mem?mem[k]:d}},set(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const g0=st.get("g",{n:"GR20",d:"2027-06-07"});let goal=Object.assign({kmin:4,kmax:10},g0,g0.kg!=null&&g0.kmax==null?{kmax:g0.kg,kmin:Math.min(4,g0.kg)}:{}),acts=st.get("a",[]).map(a=>({...a,type:{cardio:"base",autre:"patin"}[a.type]||a.type})),rec=Object.assign({wr:70,en:3,so:3},st.get("r",{}));
+const TY={marche:"Marche inclinée",hiit:"Cardio HIT",renfo:"Renforcement",patin:"Patinoire",base:"Cardio base"};
+if(!goal.m20){goal.kmax=20;goal.m20=1;st.set("g",goal)}
+const wks=()=>(Date.parse(goal.d+"T08:00:00")-Date.now())/(7*864e5);
+function phase(w){return w>16?"base":w>6?"build":w>2?"spec":"taper"}
+const PN={base:"Fondation",build:"Construction",spec:"Spécifique",taper:"Affûtage"};
+function head(live){
+ if(!live){$("#gn").value=goal.n;$("#gd").value=goal.d}dl();
+ const w=wks(),d=Math.ceil(w*7);
+ if(d<0){$("#days").textContent="Terminé";$("#gtxt").textContent=goal.n;$("#bar").innerHTML="";return}
+ $("#days").textContent="J−"+d;
+ $("#gtxt").textContent=goal.n+", le "+new Date(goal.d+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"})+" · "+Math.round(w)+" semaines";
+ const m=Math.min,sg=[["base",Math.max(0,w-16)],["build",m(w,16)-m(w,6)],["spec",m(w,6)-m(w,2)],["taper",m(w,2)]],cur=phase(w);
+ $("#bar").innerHTML=sg.filter(x=>x[1]>0.05).map(x=>`<div class="${x[0]==cur?"on":""}" style="flex:${x[1]}">${PN[x[0]]}</div>`).join("");
+}
+function list(){
+ const el=$("#list");$("#lc").textContent=acts.length;
+ if(!acts.length){el.innerHTML='<p class="why">Aucune séance importée. Ajoutez les exports de votre montre (fichiers .fit).</p>';return}
+ el.innerHTML=acts.slice(0,60).map((a,i)=>`<div class="act"><div><span style="display:inline-block;vertical-align:middle;margin-right:8px">${chip(a.type)}</span>${new Date(a.t).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})} · ${a.dur} min<small>${a.ep!=null?"EPOC "+(+a.ep).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.kcal} kcal${(a.asc!=null&&(a.asc>0||(a.v>=2&&a.type!=="marche")))?" · D+ "+a.asc+" m":""}</small></div><select data-i="${i}" aria-label="Type de séance">${Object.keys(TY).map(k=>`<option value="${k}"${k==a.type?" selected":""}>${TY[k]}</option>`).join("")}</select><select data-w="${i}" aria-label="Charge utilisée en kilos"><option value="">Charge</option>${Array.from({length:20},(_,n)=>n+6).map(n=>`<option value="${n}"${n==a.kg?" selected":""}>${n} kg</option>`).join("")}</select><button class="ghost" data-x="${i}" aria-label="Supprimer">×</button></div>`).join("");
+}
+function save(){acts.sort((a,b)=>b.t-a.t);acts=acts.slice(0,60);st.set("a",acts);list();sum10()}
+function fitSession(buf){
+ const v=new DataView(buf),hs=v.getUint8(0),end=hs+v.getUint32(4,true);
+ if(String.fromCharCode(v.getUint8(8),v.getUint8(9),v.getUint8(10),v.getUint8(11))!==".FIT")throw 0;
+ const defs={},desc={},S={};let p=hs;
+ const rd=(o,bt,le)=>{const t=bt&31;let x;
+  if(t===1)x=v.getInt8(o);else if(t===3)x=v.getInt16(o,le);else if(t===5)x=v.getInt32(o,le);else if(t===8)return v.getFloat32(o,le);
+  else if(t===4||t===11)x=v.getUint16(o,le);else if(t===6||t===12)x=v.getUint32(o,le);else x=v.getUint8(o);
+  return x===(t===4||t===11?65535:t===6||t===12?4294967295:t===1?127:t===3?32767:t===5?2147483647:255)?null:x};
+ const sz=bt=>[1,1,1,2,2,4,4,1,4,8,1,2,4,1,8,8,8][bt&31]||1;
+ while(p<end){const h=v.getUint8(p++);
+  if(!(h&128)&&(h&64)){p++;const le=v.getUint8(p++)===0,g=v.getUint16(p,le);p+=2;const n=v.getUint8(p++),f=[],dv=[];
+   for(let i=0;i<n;i++){f.push([v.getUint8(p),v.getUint8(p+1),v.getUint8(p+2)]);p+=3}
+   if(h&32){const m=v.getUint8(p++);for(let i=0;i<m;i++){dv.push([v.getUint8(p),v.getUint8(p+1),v.getUint8(p+2)]);p+=3}}
+   defs[h&15]={g,le,f,dv};continue}
+  const d=defs[(h&128)?(h>>5)&3:h&15];if(!d)throw 0;const r={};
+  for(const [num,size,bt] of d.f){
+   if(d.g===206&&num===3){let s="";for(let i=0;i<size&&v.getUint8(p+i);i++)s+=String.fromCharCode(v.getUint8(p+i));r[3]=s}
+   else if(d.g===18&&num===65){r[65]=[];for(let i=0;i+4<=size;i+=4)r[65].push(rd(p+i,bt,d.le))}else if((d.g===18||d.g===206)&&size===sz(bt))r[num]=rd(p,bt,d.le);
+   p+=size}
+  for(const [num,size,idx] of d.dv){
+   const x=desc[idx+":"+num];if(d.g===18&&x&&size===sz(x.bt))r[x.n]=rd(p,x.bt,d.le);p+=size}
+  if(d.g===206)desc[r[0]+":"+r[1]]={n:r[3],bt:r[2]};
+  if(d.g===18&&!S.t)Object.assign(S,r,{t:1})}
+ return S}
+
+async function ingest(files){
+ const bad=[];
+ for(const f of files){try{$("#st").textContent="Lecture de "+f.name+"…";if(acts.some(a=>a.src===f.name+f.size&&a.ep!=null&&a.v>=4))continue;
+  const S=fitSession(await f.arrayBuffer()),asc=S[22]!=null?Math.round(S[22]):null,dist=(S[9]||0)/100,t=(S[2]+631065600)*1000;
+  const a={src:f.name+f.size,id:String(Math.round(t/1000)),t:t,dur:Math.round((S[7]||0)/60000),kcal:S[11]||0,rec:(S.recovery_time||0)/3600,ep:Math.round((S.peak_epoc||0)*10)/10,te:(S[24]||0)/10,hz:Math.round((S[65]||[]).slice(2).reduce((s,x)=>s+(x||0),0)/6e3)/10,hr:S[16]||null,asc:asc,v:4,fm:null,z2:null,type:/^Gym/i.test(f.name)?"renfo":/^(Treadmill|Hiking|Mountaineering)/i.test(f.name)?"marche":/^IceSkating/i.test(f.name)?"patin":asc>150?"marche":(dist>1500?"base":"renfo")};
+  if(isNaN(a.t)||!a.dur)throw 0;
+  const o=acts.find(x=>x.id===a.id);if(o){a.type=o.type;if(o.kg!=null)a.kg=o.kg}acts=acts.filter(x=>x.id!==a.id);acts.push(a)}catch(x){bad.push(f.name)}}
+ $("#err").textContent=bad.length?"Fichier illisible : "+bad.join(", ")+". Il faut un export Suunto au format .fit.":"";
+ $("#st").textContent="";save()}
+$("#ff").addEventListener("change",async e=>{await ingest(e.target.files);e.target.value=""});
+$("#list").addEventListener("change",e=>{const d=e.target.dataset;if(d.i!=null){acts[+d.i].type=e.target.value;save()}else if(d.w!=null){acts[+d.w].kg=e.target.value?+e.target.value:null;save()}});
+$("#list").addEventListener("click",e=>{const x=e.target.dataset.x;if(x!=null){acts.splice(+x,1);save()}});
+const gsave=()=>{const d=$("#gd").value;if(!d)return;goal.n=$("#gn").value.trim()||"Objectif";goal.d=d;goal.m20=1;st.set("g",goal);head(true);sum10()};$("#gn").oninput=gsave;$("#gd").onchange=gsave;
+[["s1","wr","%"],["s2","en",""],["s3","so",""]].forEach(([id,k,u])=>{const i=$("#"+id);i.value=rec[k];i.nextElementSibling.textContent=rec[k]+u;i.oninput=()=>{rec[k]=+i.value;i.nextElementSibling.textContent=i.value+u;st.set("r",rec);viz()}});
+
+function ready(){
+ let s=rec.wr*.5+(rec.en-1)/4*30+(5-rec.so)/4*20,why=[];
+ const l=acts[0];
+ if(l){const left=l.rec-(Date.now()-(l.t+l.dur*6e4))/36e5;
+  if(left>6){s-=20;why.push("Votre montre annonçait "+Math.round(l.rec)+" h de récupération après la dernière séance : il en reste environ "+Math.round(left)+" h.")}
+  else if(left>0){s-=8;why.push("Il reste environ "+Math.round(left)+" h de récupération annoncée par la montre.")}}
+ return{s:Math.max(0,Math.round(s)),why};
+}
+function dl(){const M=25,lo=goal.kmin,hi=goal.kmax,e=$("#dfill");$("#gk1").value=lo;$("#gk2").value=hi;e.style.left="calc(11px + (100% - 22px) * "+lo/M+")";e.style.right="calc(11px + (100% - 22px) * "+(1-hi/M)+")";$("#gkv").textContent=lo+" – "+hi+" kg"}
+["gk1","gk2"].forEach(id=>{$("#"+id).oninput=()=>{let lo=+$("#gk1").value,hi=+$("#gk2").value;if(id==="gk1"&&lo>hi)lo=hi;if(id==="gk2"&&hi<lo)hi=lo;goal.kmin=lo;goal.kmax=hi;st.set("g",goal);dl();sum10()}});
+function lds(f){const k=lk(f),m=goal.kmin;return{l:k,c:Math.min(k,Math.max(m,Math.round(k*.6))),h:Math.min(k,Math.max(m,Math.round(k*.4)))}}
+function lk(f){const lo=goal.kmin,hi=goal.kmax;if(!hi)return 0;const w=wks(),rk=acts.filter(a=>a.type==="marche"&&a.kg&&Date.now()-a.t<28*864e5).map(a=>a.kg);let k=w<2?Math.max(lo,hi*.6):lo+(hi-lo)*(w>=28?0:w<=4?1:(28-w)/24);k*=f;if(rk.length)k=Math.min(k,Math.max(...rk)+2);return Math.round(Math.min(hi,Math.max(lo,k)))}
+function plan(ty,r){
+ const w=wks(),P=phase(w),wk=acts.filter(a=>Date.now()-a.t<7*864e5),c={renfo:0,hiit:0,base:0,marche:0,patin:0};
+ wk.forEach(a=>{if(c[a.type]!=null)c[a.type]++});
+ 
+ const f=r.s>=75?1:r.s>=55?.8:.6,why=["Récupération estimée : "+r.s+"/100."].concat(r.why);
+ why.push("Phase "+PN[P].toLowerCase()+" ("+Math.max(0,Math.round(w))+" sem. avant l’objectif). Sur 7 jours : "+c.renfo+" renforcement, "+(c.hiit+c.base)+" cardio, "+c.marche+" marche inclinée, "+c.patin+" patinoire.");
+ 
+ 
+ 
+ if(ty==="renfo"){
+  const [n,rp,n2]={base:[3,12,"charge modérée"],build:[4,8,"charge lourde, remontée contrôlée"],spec:[3,10,"descente en 3 s"],taper:[2,8,"charge légère"]}[P],S=Math.max(2,Math.round(n*f));
+  return{t:"Renforcement · "+Math.round(45*f)+" min",l:["Tractions ou tirage vertical : "+S+" × "+rp+" ("+n2+")","Rowing haltère ou barre : "+S+" × "+rp,"Développé militaire haltères : "+S+" × "+rp,"Développé couché ou pompes lestées : "+S+" × "+rp,"Oiseau ou face pull (arrière d’épaules) : "+S+" × 15","Gainage planche puis latéral : "+S+" × 40 s"],why};
+ }
+ if(ty==="hiit"){
+  const [n,ru]={base:[3,60],build:[3,90],spec:[3,90],taper:[2,60]}[P],R=Math.max(2,Math.round(n*f)),min=Math.round(3+R*(ru+180)/60+2),kh=lds(f).h,lh=kh>=1?"Gilet ou sac bien serré, charge plus légère qu’en marche car il y a de la course. Sans charge en cas de gêne.":"";
+  return{t:"HIT",t2:(kh>=1?kh+" kg · ":"")+min+" min",l:["3 min d’échauffement : marche à 8 %.",R+" blocs : course "+ru+" s à 7 km/h et 8 %, puis 1 min de récupération à 5 %, puis 2 min de marche à 20 % (3 km/h).","2 min de retour au calme à 5 %.",lh,"Course en petites foulées ; arrêtez-la si une douleur apparaît."],why,kg:kh};
+ }
+ 
+ const lg=!wk.some(a=>a.type==="marche"&&a.asc>=400)&&r.s>=60;
+ const dp=lg?Math.round({base:500,build:800,spec:1100,taper:400}[P]*f/50)*50:Math.round(200*f/10)*10,inc=lg?(P==="base"?20:P==="build"?22:24):20,mn=Math.round(dp/(50*inc/100)),ld=lds(f),kg=lg?ld.l:ld.c;
+ return{t:lg?"Marche inclinée longue":"Marche inclinée courte",t2:(kg>=1?kg+" kg · ":"")+dp+" m D+",l:["Pente "+inc+" % à 3 km/h, environ "+mn+" min (hors échauffement).","5 min d’échauffement à 8 %, puis la pente cible sans courir.","","Durée calculée avec un tapis réglé à 3 km/h au-delà de 12 %."],why,kg};
+}
+const SH={base:{marche:.3,renfo:.3,hiit:.4},build:{marche:.4,renfo:.25,hiit:.35},spec:{marche:.55,renfo:.2,hiit:.25},taper:{marche:.6,renfo:.2,hiit:.2}};
+let tgt=Math.min(10,st.get("n",6));
+const done10=()=>{const c={renfo:0,hiit:0,base:0,marche:0,patin:0};acts.forEach(a=>{if(Date.now()-a.t<10*864e5&&c[a.type]!=null)c[a.type]++});return c};
+function alloc(N,P){const s=SH[P],t={};let u=0;Object.keys(s).forEach(k=>{t[k]=Math.floor(N*s[k]);u+=t[k]});Object.keys(s).sort((a,b)=>(N*s[b]-t[b])-(N*s[a]-t[a])).slice(0,N-u).forEach(k=>t[k]++);return t}
+const CL={marche:"var(--pine)",renfo:"var(--ice)",hiit:"var(--warn)",patin:"var(--mut)",base:"var(--mut)"},LT={marche:"M",hiit:"H",renfo:"R",patin:"P",base:"C"},LB={marche:"Marche inclinée",hiit:"HIT",renfo:"Renforcement"};
+const chip=k=>'<span class="chip" title="'+TY[k]+'" style="background:'+CL[k]+'">'+LT[k]+'</span>';
+function restTxt(L){
+ const h=Math.max(L.W||0,L.rw),f=v=>v<1?'moins d’1 h':v<48?'environ '+Math.ceil(v)+' h':'environ '+Math.round(v/24)+' j',d=new Date(Date.now()+h*36e5).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+ return '<div class="rt"><small>Avant une séance pertinente</small><div class="rv">'+(h<1?'&lt; 1<span>h</span>':h<48?'≈ <b>'+Math.ceil(h)+'</b><span>h</span>':'≈ <b>'+Math.round(h/24)+'</b><span>j</span>')+'</div><p>Reprise estimée vers le <b>'+d+'</b></p><p class="why">Charge récente : '+(L.W==null?'non estimable':f(L.W))+' · montre : '+(L.rw>0?f(L.rw):'récupération terminée')+'</p></div>'
+}
+function lbar(L){
+ if(L.C<5)return"";
+ const mx=Math.max(L.A,L.B,L.C)*1.15,w=v=>Math.round(v/mx*100),over=L.A>L.B;
+ return '<div class="lb" role="img" aria-label="Charge actuelle '+Math.round(L.A)+', conseillée '+Math.round(L.B)+'"><div class="lt"><div class="lf" style="width:'+w(L.A)+'%;background:'+(over?'var(--warn)':'var(--pine)')+'"></div><i class="lk lh" style="left:'+w(L.C)+'%"></i><i class="lk" style="left:'+w(L.B)+'%"></i></div><p class="why">Charge actuelle <b>'+Math.round(L.A)+'</b>'+' · conseillée <b>'+Math.round(L.B)+'</b> (▼) · habituelle '+Math.round(L.C)+' ( <b>|</b> )</p>'+(L.ad.f<1?'<p class="why">Budget réduit de '+Math.round((1-L.ad.f)*100)+' % : '+L.ad.n.join(' ; ')+'.</p>':'')+(L.full?restTxt(L):'')+'</div>'
+}
+function adj(a,p){
+ const k=s=>{const x=s.filter(z=>z.ep>=5&&z.rec>0);return x.length>=2?x.reduce((t,z)=>t+z.rec/z.ep,0)/x.length:null},
+ ka=k(a),kp=k(p),q=ka&&kp?ka/kp:1,ok=a.concat(p).every(z=>z.hz!=null),ha=a.reduce((t,z)=>t+(z.hz||0),0),hp=p.reduce((t,z)=>t+(z.hz||0),0)/2.8,qi=ok&&hp>=5?ha/hp:1,n=[],F=x=>x.toFixed(1).replace(".",",");let f=1;
+ if(q>1.25){f*=q>1.5?.85:.93;n.push("récupération annoncée par la montre +"+Math.round((q-1)*100)+" % par unité d’EPOC")}
+ if(qi>1.3){f*=qi>1.6?.85:.93;n.push("temps en zones 3 à 5 ×"+F(qi)+" par rapport à l’habitude")}
+ return{f:Math.max(.7,f),n,tau:4*Math.min(1.5,Math.max(.8,q))}}
+function rest(a,B,now,tau){const D=864e5,F=a.reduce((s,x)=>s+x.ep*Math.exp(-(now-(x.t+x.dur*6e4))/(tau*D)),0),th=B*.4;return F>th?tau*Math.log(F/th)*24:0}
+function LD(){
+ const now=Date.now(),D=864e5,P=phase(wks()),ac=acts.filter(a=>a.ep!=null),in10=ac.filter(a=>now-a.t<10*D),pre=ac.filter(a=>now-a.t>=10*D&&now-a.t<38*D),A=in10.reduce((s,a)=>s+a.ep,0),C=pre.reduce((s,a)=>s+a.ep,0)/2.8,all=in10.concat(pre),m=all.length?all.reduce((s,a)=>s+a.ep,0)/all.length:20,r=C>=5?A/C:null,ad=adj(in10,pre),g={base:1.15,build:1.15,spec:1.15,taper:.6}[P]*(r>1.5?.75:r>1.3?.87:1)*ad.f,n=C>=5?Math.max(1,Math.min(tgt,Math.round(C*g/m))):tgt,c=done10();
+ const full=C>=5?A>=C*g:Object.values(c).reduce((s,x)=>s+x,0)>=n;let W=0;if(full)W=C>=5?rest(all,C*g,now,ad.tau):null;const rw=acts.reduce((x,a)=>{const e=(now-(a.t+a.dur*6e4))/36e5;return a.t>now-3*D?Math.max(x,a.rec-e,(a.te>=4?48:a.te>=3?24:0)-e):x},0);
+ return{A,C,r,m,n,P,ad,B:C*g,full,W,rw,tot:Object.values(c).reduce((s,x)=>s+x,0),out:c.patin+c.base,miss:acts.some(a=>a.ep==null)}
+}
+function ldChip(b,r){const t=b.v<40?'':plan(b.k,r).t2;return t?'<div><b>'+t+'</b></div>':''}
+function viz(){
+ const L=LD(),P=L.P,T=alloc(Math.max(0,L.n-L.out),P),c=done10(),S=SH[P],ks=Object.keys(T).sort((a,b)=>(T[b]-c[b])-(T[a]-c[a])),r0=ready(),b=["renfo","hiit","marche"].map(k=>Object.assign({k},relev(k,r0))).sort((x,y)=>y.v-x.v)[0];
+ let h='<div class="best"><small>Séance la plus pertinente maintenant</small><div><b>'+(b.v<40?'Repos actif':LB[b.k])+'</b><span>'+b.v+' %</span></div>'+ldChip(b,r0)+'<p class="why">'+(b.v<40?'Aucun type ne ressort clairement. ':'')+b.rs.join(' · ')+'</p></div>'+lbar(L)+'<p class="kpi"><b>'+L.tot+'</b> faites · <b>'+L.n+'</b> conseillé</p>'+(L.out?'<p class="why">Dont '+c.patin+' patinoire et '+c.base+' cardio base, comptées dans le total mais non proposées.</p>':'')+'<p class="why">'+(L.C>=5?'':'Historique de charge insuffisant : le nombre conseillé reprend votre disponibilité.')+(L.miss?' Réimportez vos fichiers pour lire la charge de toutes les séances.':'')+'</p>';
+ h+='<div class="mix" aria-label="Répartition visée">'+Object.keys(S).map(k=>'<div style="flex:'+S[k]+';background:'+CL[k]+'">'+LT[k]+' '+Math.round(S[k]*100)+' %</div>').join("")+'</div><p class="why">Répartition visée, phase '+PN[P].toLowerCase()+'.</p>';
+ h+=ks.map(k=>{const n=Math.max(T[k],c[k]),r=Math.max(0,T[k]-c[k]);let d="";for(let i=0;i<n;i++)d+='<span class="dot'+(i<c[k]?' on':'')+'"></span>';return '<div class="tr"><b>'+LB[k]+'</b><div class="dots" style="color:'+CL[k]+'">'+(d||'–')+'</div><div class="rest">'+c[k]+'/'+T[k]+(r?' · reste '+r:' ✓')+'</div></div>'}).join("");
+ const t0=new Date();t0.setHours(0,0,0,0);let sp="";
+ for(let i=9;i>=0;i--){const d=new Date(t0);d.setDate(d.getDate()-i);const s=d.getTime(),e=new Date(d).setDate(d.getDate()+1),dd=acts.filter(a=>a.t>=s&&a.t<e);sp+='<div class="dy'+(i?'':' now')+'"><b>'+d.toLocaleDateString("fr-FR",{weekday:"short"}).slice(0,3)+'</b>'+d.getDate()+dd.map(a=>chip(a.type)).join("")+'</div>'}
+ h+='<p class="why">10 derniers jours</p><div class="strip">'+sp+'</div><p class="why">M marche inclinée · H HIT · R renforcement · P patinoire · C cardio base</p>';
+ $("#viz").innerHTML=h;renderCards()}
+function sum10(){viz()}
+{const i=$("#nt");i.value=tgt;i.nextElementSibling.textContent=tgt;i.oninput=()=>{tgt=+i.value;i.nextElementSibling.textContent=tgt;st.set("n",tgt);sum10()}}
+function relev(ty,r){
+ const P=phase(wks()),c=done10(),L=LD(),rs=[],T=alloc(Math.max(0,L.n-L.out),P);
+ 
+ const t=T[ty],nd=Math.max(-1,Math.min(1,(t-c[ty])/Math.max(1,t))),dm={renfo:60,hiit:70,base:45,marche:45}[ty],so=Math.max(0,rec.so-3);
+ let v=60+25*nd-0.4*Math.max(0,dm-r.s)-so*{renfo:12,hiit:8,base:5,marche:6}[ty];
+ if(nd>0)rs.push("manque sur 10 jours");else if(nd<0)rs.push("déjà atteint sur 10 jours");
+ if(acts.some(a=>a.type===ty&&Date.now()-a.t<1.7e8)){v-=20;rs.push("même type il y a moins de 48 h")}
+ if(r.s<dm)rs.push("récupération sous le niveau requis pour cet effort");
+ if(so)rs.push("courbatures");
+ if(P==="taper"&&ty==="hiit")v-=15;
+ if(P==="spec"&&ty==="marche")v+=10;
+ if(L.r>1.3&&ty==="hiit"){v-=15;rs.push("charge récente élevée")}
+ if(L.full){v-=20;rs.push("charge conseillée sur 10 jours atteinte")}
+ return{v:Math.max(5,Math.min(98,Math.round(v))),rs,t,d:c[ty]};
+}
+function renderCards(){
+ const r=ready(),el=$("#cards"),ps=["renfo","hiit","marche"].map(t=>{const p=plan(t,r),q=relev(t,r);p.v=q.v;p.rs=q.rs;p.t10=q.t;p.d10=q.d;return p}).sort((a,b)=>b.v-a.v);
+ 
+ el.innerHTML=(r.s<35?'<p class="msg">Récupération basse ('+r.s+'/100) : un repos actif (marche à plat, mobilité) est préférable.</p>':"")+ps.map((p,i)=>`<article class="card${i?"":" top"}"><div class="pc">${p.v}<small> %</small><span>pertinence</span></div><div><h2>${p.t}${p.t2?"<br>"+p.t2:""}</h2><p class="why">10 jours : ${p.d10} faite(s) sur ${p.t10} recommandée(s)</p><ul>${p.l.filter(Boolean).map(x=>"<li>"+x+"</li>").join("")}</ul>${p.rs.length?'<p class="why">'+p.rs.join(" · ")+"</p>":""}</div></article>`).join("")+'<p class="why">'+ps[0].why.join(" ")+"</p>";
+ 
+};
+const idb=(m,v)=>new Promise((ok,ko)=>{const q=indexedDB.open("coach",1);q.onupgradeneeded=()=>q.result.createObjectStore("h");q.onerror=()=>ko(q.error);q.onsuccess=()=>{const s=q.result.transaction("h",m==="get"?"readonly":"readwrite").objectStore("h"),r=m==="get"?s.get("dir"):s.put(v,"dir");r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)}});
+let dir=null;
+async function readDir(){
+ try{
+  if(await dir.requestPermission({mode:"read"})!=="granted"){$("#err").textContent="Accès au dossier refusé.";return}
+  const fs=[];
+  for await(const [n,h] of dir.entries()){if(h.kind==="file"&&/\.fit$/i.test(n))fs.push(await h.getFile())}
+  $("#dn").textContent="Dossier : "+dir.name+" · "+fs.length+" fichier(s) .fit";
+  await ingest(fs);
+ }catch(e){$("#err").textContent="Lecture du dossier impossible : "+(e&&e.message||e)}
+}
+async function pick(){
+ if(!window.showDirectoryPicker){$("#err").textContent="Ce navigateur ne permet pas de choisir un dossier (Chrome ou Edge sur ordinateur). Utilisez le bouton d’ajout de fichiers.";return}
+ try{dir=await showDirectoryPicker({id:"suunto",mode:"read"});$("#pk").textContent="Relire le dossier";try{await idb("put",dir)}catch(e){}await readDir()}
+ catch(e){if(e.name!=="AbortError")$("#err").textContent="Sélection impossible ici : "+e.message}
+}
+$("#pk").onclick=()=>dir?readDir():pick();
+$("#pk2").onclick=pick;
+(async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
+head();list();sum10();
+</script></body></html>

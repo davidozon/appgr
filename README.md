@@ -1,0 +1,8 @@
+# App GR — Prochaine séance (FIT)
+
+Sauvegarde de l’artefact claude.ai « Prochaine séance (FIT) » (préparation GR20).
+
+- `index.html` : page autonome, ouvrable directement dans un navigateur.
+- Sauvegarde automatique quotidienne : un commit n’est créé que si l’artefact a changé.
+
+Les données (séances importées, objectif) restent dans le navigateur (localStorage) et ne sont pas dans ce dépôt.
