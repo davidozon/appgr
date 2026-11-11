@@ -279,7 +279,7 @@ function chart(){
  S.forEach(a=>{[a.t,a.t+10*D].forEach(e=>{if(e>TA&&e<TB)pts.push(e-1,e)})});
  pts=[...new Set(pts)].sort((a,b)=>a-b);
  const A=pts.map(Aat),C=pts.map(Cat),G=pts.map((t,i)=>gP(ph(t),A[i],C[i])),dots=S.map(a=>Object.assign({y:Aat(a.t)},a)).sort((a,b)=>a.t-b.t);
- let mx=Math.max(10,...A,...C.map(c=>c>=5?c*1.5:0))*1.12;
+ let mx=Math.max(10,...A,...C.map(c=>c>=5?c*1.5:0))*1.12,mn=0;
  const ZN=v=>v==null?["–","var(--mut)"]:v<.8?["sous-charge","var(--mut)"]:v<=1.3?["progression","var(--prog)"]:v<=1.5?["vigilance","var(--vig)"]:["risque","var(--risk)"],N=v=>Math.round(v).toLocaleString("fr-FR"),F=x=>x.toFixed(2).replace(".",",");
  const NM={marche:'marche inclinée',renfo:'renforcement',hiit:'HIT'};
  el.innerHTML='<div id="egr" tabindex="0" aria-label="Graphique de charge d’entraînement. Glisser pour parcourir, pincer pour zoomer, flèches et touches + et − au clavier."></div><div id="edt" class="edt" aria-live="polite"></div>'
@@ -294,16 +294,16 @@ function chart(){
  let K={};
  const near=(c,px)=>{let d=null,bx=px;dots.forEach(a=>{const x=Math.abs(K.X(a.t)-K.X(c));if(x<bx){bx=x;d=a}});return d};
  const draw=()=>{
-  const fs=$("#echs").classList.contains("efs"),W=fs?640:360,Hh=fs?250:210,l=28,r=6,tp=12,b=22,s=EV.s,T0=EV.c-s/2,T1=EV.c+s/2,pw=W-l-r,X=t=>l+(t-T0)/s*pw,Y=v=>tp+(1-Math.min(v,mx)/mx)*(Hh-tp-b),P2=(t,v)=>X(t).toFixed(1)+","+Y(v).toFixed(1);
+  const fs=$("#echs").classList.contains("efs"),W=fs?640:360,Hh=fs?250:210,l=28,r=6,tp=12,b=22,s=EV.s,T0=EV.c-s/2,T1=EV.c+s/2,pw=W-l-r,X=t=>l+(t-T0)/s*pw,Y=v=>tp+(1-(Math.max(mn,Math.min(v,mx))-mn)/(mx-mn))*(Hh-tp-b),P2=(t,v)=>X(t).toFixed(1)+","+Y(v).toFixed(1);
   K={W,l,r,pw,X};
   let i0=pts.findIndex(t=>t>=T0),i1=pts.findIndex(t=>t>T1);i0=Math.max(0,(i0<0?pts.length:i0)-1);i1=i1<0?pts.length-1:i1;
   const ix=[];for(let i=i0;i<=i1;i++)ix.push(i);
-  {let tg=10;ix.forEach(i=>{tg=Math.max(tg,A[i]);if(C[i]>=5&&Math.abs(pts[i]-EV.c)<=7*D)tg=Math.max(tg,C[i]*1.35)});tg*=1.1;if(EV.mx==null)EV.mx=tg;else{EV.mx+=(tg-EV.mx)*.3;if(Math.abs(tg-EV.mx)>tg*.004)req();else EV.mx=tg}mx=EV.mx}
+  {let hi=10,lo=1e9;ix.forEach(i=>{hi=Math.max(hi,A[i]);lo=Math.min(lo,A[i])});const pd=Math.max(15,(hi-lo)*.45,hi*.18),th=hi+pd,tl=Math.max(0,lo-pd);if(EV.mx==null){EV.mx=th;EV.mn=tl}else{EV.mx+=(th-EV.mx)*.3;EV.mn+=(tl-EV.mn)*.3;if(Math.abs(th-EV.mx)>th*.004||Math.abs(tl-EV.mn)>th*.004)req();else{EV.mx=th;EV.mn=tl}}mx=EV.mx;mn=EV.mn}
   const segs=()=>{const o=[];let q=[];ix.forEach(i=>{if(C[i]>=5)q.push(i);else{if(q.length>1)o.push(q);q=[]}});if(q.length>1)o.push(q);return o};
   const band=(lo,hi,st)=>segs().map(q=>'<path d="M'+q.map(i=>P2(pts[i],C[i]*hi)).join("L")+"L"+q.slice().reverse().map(i=>P2(pts[i],C[i]*lo)).join("L")+'Z" style="'+st+'"/>').join("");
   const line=f=>{const j=ix.filter(i=>f(pts[i]));return j.length>1?"M"+j.map(i=>P2(pts[i],A[i])).join("L"):""};
   let o='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Charge d’entraînement sur 10 jours glissants"><defs><clipPath id="ecp0"><rect x="'+l+'" y="0" width="'+pw+'" height="'+Hh+'"/></clipPath></defs>';
-  const st=Math.max(10,Math.ceil(mx/3/10)*10);for(let v=0;v<mx;v+=st)o+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+'" style="stroke:var(--line)"/><text x="'+(l-4)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end" style="fill:var(--mut)">'+v+'</text>';
+  const st=Math.max(10,Math.ceil((mx-mn)/3/10)*10);for(let v=Math.ceil(mn/st)*st;v<mx;v+=st)o+='<line x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+'" style="stroke:var(--line)"/><text x="'+(l-4)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end" style="fill:var(--mut)">'+v+'</text>';
   o+='<g clip-path="url(#ecp0)">'+band(.8,1.3,"fill:var(--prog);opacity:.3")+band(1.3,1.5,"fill:var(--vig);opacity:.55")+band(1.5,99,"fill:var(--risk);opacity:.42");
   const sd=s<=9*D?1:s<=18*D?2:s<=45*D?7:14,dd=new Date(T0);dd.setHours(0,0,0,0);if(sd>=7)dd.setDate(dd.getDate()-((dd.getDay()+6)%7));
   for(let t=dd.getTime();t<=T1;t+=sd*D){const d=new Date(t);if(t<T0)continue;o+='<line x1="'+X(t).toFixed(1)+'" x2="'+X(t).toFixed(1)+'" y1="'+(Hh-b)+'" y2="'+(Hh-b+3)+'" style="stroke:var(--mut)"/><text x="'+X(t).toFixed(1)+'" y="'+(Hh-6)+'" text-anchor="middle" style="fill:var(--mut)">'+d.getDate()+'/'+(d.getMonth()+1)+'</text>'}
@@ -389,7 +389,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.8";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.9";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
