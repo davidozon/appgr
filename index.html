@@ -60,16 +60,6 @@ html.lock,html.lock body{overflow:hidden}
 <div class="bar" id="bar" role="img" aria-label="Phases de préparation"></div></div>
 </section>
 
-<section><h2>Objectif</h2>
-<div class="row"><input type="text" id="gn" aria-label="Nom de l’objectif" placeholder="Nom de l’objectif"><input type="date" id="gd" aria-label="Date de l’objectif"></div>
-<div class="sl dlr"><label for="gk1">Charge du sac</label><div class="dl"><div class="tk"></div><div class="fl" id="dfill"></div><input type="range" id="gk1" min="0" max="25" step="1" aria-label="Charge minimale pour la préparation, en kilos"><input type="range" id="gk2" min="0" max="25" step="1" aria-label="Charge le jour de l’objectif, en kilos"></div><span id="gkv"></span></div>
-<p class="why">Curseur de gauche : charge minimum pour les entraînements<br>Curseur de droite : charge le jour de l’objectif</p></section>
-
-
-
-
-
-
 <section><h2>Conditions physiques</h2>
 <div class="sl"><label for="s1">Récupération</label><input type="range" id="s1" min="0" max="100"><span></span></div>
 
@@ -102,6 +92,10 @@ html.lock,html.lock body{overflow:hidden}
 <p class="why">Seuils et volumes sont des choix raisonnables, non validés par un professionnel. Ce n’est pas un avis médical : en cas de douleur, ne forcez pas.</p></details></section>
 </main>
 <div id="set" hidden role="dialog" aria-modal="true" aria-labelledby="sett"><div class="sw"><div class="apph sth"><span class="ti"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F5D50"/><path d="M3.6 17.6 9 9.6l2.9 4.1 2.6-3.3 5.9 7.2Z" fill="#F6F8F9"/><rect x="13.2" y="4.6" width="6.2" height="1.6" rx=".3" fill="#F6F8F9"/><rect x="13.2" y="6.4" width="6.2" height="1.6" rx=".3" fill="#D2321C"/></svg><span class="tt" id="sett">Paramètres<small class="ver">App GR</small></span></span><span class="hb"><button type="button" class="hbtn" id="stc">Fermer</button><button type="button" class="hbtn fsb" id="fsb2" aria-label="Plein écran" title="Plein écran">⛶</button></span></div>
+<section><h2>Objectif</h2>
+<div class="row"><input type="text" id="gn" aria-label="Nom de l’objectif" placeholder="Nom de l’objectif"><input type="date" id="gd" aria-label="Date de l’objectif"></div>
+<div class="sl dlr"><label for="gk1">Charge du sac</label><div class="dl"><div class="tk"></div><div class="fl" id="dfill"></div><input type="range" id="gk1" min="0" max="25" step="1" aria-label="Charge minimale pour la préparation, en kilos"><input type="range" id="gk2" min="0" max="25" step="1" aria-label="Charge le jour de l’objectif, en kilos"></div><span id="gkv"></span></div>
+<p class="why">Curseur de gauche : charge minimum pour les entraînements<br>Curseur de droite : charge le jour de l’objectif</p></section>
 <section><h2>Fichiers FIT</h2>
 <div class="row"><button id="pk">Choisir le dossier</button><button class="sec" id="pk2">Changer</button></div>
 <p class="why" id="dn"></p><p class="why" id="st"></p>
@@ -391,7 +385,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.3";$("#ver").textContent=VER;
+const VER="v261111.4";$("#ver").textContent=VER;
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
