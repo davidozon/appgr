@@ -126,11 +126,10 @@ section.efs #ech{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid
 <div class="row"><button id="ivs">Synchroniser</button><button class="sec" id="ivt">Tester la connexion</button></div>
 <p class="why" id="ivm" aria-live="polite"></p></section>
 <section><h2>Fichiers FIT</h2>
+<details class="ivx"><summary>Comment ça marche</summary><p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours.</p><p class="why">Une séance avec plus de 2 min en zones cardio 4 et 5 est classée automatiquement en Cardio HIT (« HIT détecté ») ; un type choisi à la main n’est jamais modifié, et le renforcement et la patinoire ne sont pas reclassés.</p></details>
 <div class="row"><button id="pk">Choisir le dossier</button><button class="sec" id="pk2">Changer</button></div>
 <p class="why" id="dn"></p><p class="why" id="st"></p>
 <label class="file">Ou ajouter des fichiers .fit<input type="file" id="ff" accept=".fit" multiple></label>
-<p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours.</p>
-<p class="why">Une séance avec plus de 2 min en zones cardio 4 et 5 est classée automatiquement en Cardio HIT (« HIT détecté ») ; un type choisi à la main n’est jamais modifié, et le renforcement et la patinoire ne sont pas reclassés.</p>
 <p class="msg" id="err"></p>
 <details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details>
 <div class="row clr"><button type="button" class="ghost dang" id="clr">Vider les données d’activité</button></div><p class="why" id="clrm" aria-live="polite"></p></section>
@@ -446,7 +445,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.35";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.36";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
