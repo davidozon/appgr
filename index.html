@@ -22,8 +22,8 @@ section{background:var(--card);border:1px solid var(--line);border-radius:10px;p
 .bar div.on{background:var(--pine);color:#fff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bar div.on{color:#10201B}}
 .row{display:flex;gap:8px;flex-wrap:wrap}
-input[type=text],input[type=date],input[type=number],select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 10px;min-width:0}
-input[type=text]{flex:1 1 150px}.sl.dlr{grid-template-columns:110px 1fr 84px}.sl.dlr span:last-child{white-space:nowrap}.dl{position:relative;height:28px}.dl .tk,.dl .fl{position:absolute;top:12px;height:4px;border-radius:2px}.dl .tk{left:0;right:0;background:var(--line)}.dl .fl{background:var(--pine)}.dl input{position:absolute;left:0;top:0;width:100%;height:28px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}.dl input:focus-visible{outline:none}.dl input::-webkit-slider-runnable-track{background:none;height:28px}.dl input::-moz-range-track{background:none}.dl input::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--pine);border:3px solid var(--card);margin-top:3px;cursor:pointer}.dl input::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--pine);border:3px solid var(--card);cursor:pointer}.dl input:focus-visible::-webkit-slider-thumb{outline:3px solid var(--ice)}.dl input:focus-visible::-moz-range-thumb{outline:3px solid var(--ice)}
+input[type=text],input[type=password],input[type=date],input[type=number],select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 10px;min-width:0}
+input[type=text],input[type=password]{flex:1 1 150px}.sl.dlr{grid-template-columns:110px 1fr 84px}.sl.dlr span:last-child{white-space:nowrap}.dl{position:relative;height:28px}.dl .tk,.dl .fl{position:absolute;top:12px;height:4px;border-radius:2px}.dl .tk{left:0;right:0;background:var(--line)}.dl .fl{background:var(--pine)}.dl input{position:absolute;left:0;top:0;width:100%;height:28px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}.dl input:focus-visible{outline:none}.dl input::-webkit-slider-runnable-track{background:none;height:28px}.dl input::-moz-range-track{background:none}.dl input::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--pine);border:3px solid var(--card);margin-top:3px;cursor:pointer}.dl input::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--pine);border:3px solid var(--card);cursor:pointer}.dl input:focus-visible::-webkit-slider-thumb{outline:3px solid var(--ice)}.dl input:focus-visible::-moz-range-thumb{outline:3px solid var(--ice)}
 button,.file{font:500 16px Barlow,sans-serif;background:var(--pine);color:#fff;border:0;border-radius:6px;padding:10px 16px;cursor:pointer;display:inline-block}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button,:root:not([data-theme="light"]) .file{color:#10201B}}
 button.ghost{background:none;color:var(--mut);padding:4px 8px;border:1px solid var(--line)}
@@ -110,6 +110,12 @@ html.lock,html.lock body{overflow:hidden}
 <p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours. Une séance avec au moins 4 min en zones cardio 4 et 5, et au moins 12 % de sa durée, est classée automatiquement en Cardio HIT (« HIT détecté ») ; un type choisi à la main n’est jamais modifié.</p>
 <p class="msg" id="err"></p>
 <details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details></section>
+<section><h2>Synchronisation intervals.icu</h2>
+<p class="why">Récupère directement les fichiers .fit de vos séances depuis intervals.icu (connecté à votre compte Suunto). La clé se crée dans intervals.icu, Réglages, « Developer Settings ». Elle reste dans ce navigateur ; ne partagez pas cette page avec la clé enregistrée.</p>
+<div class="row"><input type="password" id="ivk" autocomplete="off" spellcheck="false" placeholder="Clé API intervals.icu" aria-label="Clé API intervals.icu"><input type="text" id="iva" inputmode="numeric" placeholder="ID athlète (0 = vous)" aria-label="Identifiant athlète" style="flex:0 1 150px"></div>
+<div class="sl"><label for="ivd">Jours à récupérer</label><input type="range" id="ivd" min="14" max="120" step="1"><span></span></div>
+<div class="row"><button id="ivs">Synchroniser</button><button class="sec" id="ivt">Tester la connexion</button><button class="ghost" id="ivx">Effacer la clé</button></div>
+<p class="why" id="ivm" aria-live="polite"></p></section>
 </div></div>
 <script>
 const $=s=>document.querySelector(s),mem={};
@@ -404,11 +410,39 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.13";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.14";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#set").hidden)setOpen(false)});
+
+const IV={k:st.get("ivk",""),a:st.get("iva","0"),d:st.get("ivd",42)};
+{$("#ivk").value=IV.k;$("#iva").value=IV.a;const d=$("#ivd");d.value=IV.d;d.nextElementSibling.textContent=IV.d;d.oninput=()=>{IV.d=+d.value;d.nextElementSibling.textContent=IV.d;st.set("ivd",IV.d)};
+ $("#ivk").onchange=()=>{IV.k=$("#ivk").value.trim();st.set("ivk",IV.k)};$("#iva").onchange=()=>{IV.a=$("#iva").value.trim()||"0";st.set("iva",IV.a)};
+ $("#ivx").onclick=()=>{IV.k="";$("#ivk").value="";st.set("ivk","");$("#ivm").textContent="Clé effacée de ce navigateur."}}
+const ivMsg=t=>{$("#ivm").textContent=t};
+async function ivGet(path,bin){
+ if(!IV.k)throw{u:"Saisissez d’abord votre clé API intervals.icu."};
+ let r;try{r=await fetch("https://intervals.icu/api/v1"+path,{headers:{Authorization:"Basic "+btoa("API_KEY:"+IV.k)}})}
+ catch(e){throw{u:"Connexion impossible : la page n’a pas le droit de joindre intervals.icu depuis cet endroit (blocage du navigateur ou de l’hébergement), ou vous êtes hors ligne."}}
+ if(r.status===401||r.status===403)throw{u:"Clé refusée par intervals.icu (vérifiez la clé et l’ID athlète)."};
+ if(r.status===429)throw{u:"Trop de requêtes : réessayez dans quelques minutes."};
+ if(!r.ok)throw{u:"intervals.icu a répondu avec l’erreur "+r.status+"."};
+ return bin?r.arrayBuffer():r.json()}
+async function unz(buf){const u=new Uint8Array(buf);if(u[0]===0x1f&&u[1]===0x8b&&window.DecompressionStream){return await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer()}return buf}
+const IVN={Hike:"Hiking",Walk:"Hiking",WeightTraining:"Gym",IceSkate:"IceSkating",VirtualRun:"Treadmill"};
+$("#ivt").onclick=async()=>{ivMsg("Test en cours…");try{const a=await ivGet("/athlete/"+encodeURIComponent(IV.a||"0"));ivMsg("Connexion réussie"+(a&&a.name?" : "+a.name:"")+".")}catch(e){ivMsg(e.u||"Erreur inattendue.")}};
+$("#ivs").onclick=async()=>{const b=$("#ivs");b.disabled=true;try{
+ const D=864e5,f=x=>new Date(x).toISOString().slice(0,10),ls=await ivGet("/athlete/"+encodeURIComponent(IV.a||"0")+"/activities?oldest="+f(Date.now()-IV.d*D)+"&newest="+f(Date.now()+D));
+ const todo=(Array.isArray(ls)?ls:[]).filter(x=>{const id=String(Math.round(Date.parse(x.start_date)/1000));return !acts.some(a=>(a.id===id||a.ivid===x.id)&&a.v>=7)});
+ if(!todo.length){ivMsg("Aucune nouvelle séance sur "+IV.d+" jours ("+(ls.length||0)+" déjà lues).");return}
+ const files=[];let ko=0;
+ for(let i=0;i<todo.length;i++){const x=todo[i];ivMsg("Téléchargement "+(i+1)+"/"+todo.length+"…");
+  try{const buf=await unz(await ivGet("/activity/"+encodeURIComponent(x.id)+"/file",true));files.push(new File([buf],(IVN[x.type]||x.type||"Activity")+"_"+x.id+".fit"))}catch(e){if(e&&e.u&&/Clé|requêtes|Connexion/.test(e.u))throw e;ko++}}
+ const n0=acts.length;await ingest(files);
+ acts.forEach(a=>{const m=todo.find(x=>String(Math.round(Date.parse(x.start_date)/1000))===a.id);if(m)a.ivid=m.id});save();
+ ivMsg(files.length+" séance(s) récupérée(s)"+(ko?", "+ko+" sans fichier lisible":"")+($("#err").textContent?" · "+$("#err").textContent:"")+".")
+}catch(e){ivMsg(e.u||"Erreur inattendue pendant la synchronisation.")}finally{b.disabled=false}};
 const tFS=async b=>{const d=document,el=d.documentElement;try{if(d.fullscreenElement||d.webkitFullscreenElement)await(d.exitFullscreen||d.webkitExitFullscreen).call(d);else await(el.requestFullscreen||el.webkitRequestFullscreen).call(el)}catch(e){b.title="Plein écran indisponible ici"}};
 document.querySelectorAll(".fsb").forEach(b=>b.onclick=()=>tFS(b));
 head();list();sum10();
