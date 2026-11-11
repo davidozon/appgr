@@ -195,7 +195,7 @@ async function ingest(files){
   const a={src:f.name+f.size,id:String(Math.round(t/1000)),t:t,dur:Math.round((S[8]||S[7]||0)/60000),kcal:S[11]||0,rec:(S.recovery_time||0)/3600,ep:Math.round((S.peak_epoc||0)*10)/10,tss:S[35]!=null?Math.round(S[35])/10:null,te:(S[24]||0)/10,hz:Math.round((S[65]||[]).slice(2).reduce((s,x)=>s+(x||0),0)/6e3)/10,z45:S[65]?Math.round((S[65].slice(3,5).reduce((s,x)=>s+(x||0),0))/6e3)/10:null,hr:S[16]||null,asc:asc,v:7,fm:null,z2:null,type:/^Gym/i.test(f.name)?"renfo":/^(Treadmill|Hiking|Mountaineering)/i.test(f.name)?"marche":/^IceSkating/i.test(f.name)?"patin":asc>150?"marche":(dist>1500?"base":"renfo")};
   if(isNaN(a.t)||!a.dur)throw 0;
   const hit=isHit(a);if(hit&&a.type!=="patin"){a.type="hiit";a.auto=1}
-  const o=acts.find(x=>x.id===a.id);if(o){if(o.man||!hit||o.type==="patin"){a.type=o.type;a.auto=0}a.man=o.man;if(o.kg!=null)a.kg=o.kg}acts=acts.filter(x=>x.id!==a.id);acts.push(a)}catch(x){bad.push(f.name)}}
+  {const mm=/_(i\d+)\.fit$/i.exec(f.name);if(mm)a.ivid=mm[1]}const o=acts.find(x=>x.id===a.id||(a.ivid&&x.ivid===a.ivid));if(o){if(o.man||!hit||o.type==="patin"){a.type=o.type;a.auto=0}a.man=o.man;if(o.kg!=null)a.kg=o.kg}acts=acts.filter(x=>x.id!==a.id);acts.push(a)}catch(x){bad.push(f.name)}}
  $("#err").textContent=bad.length?"Fichier illisible : "+bad.join(", ")+". Il faut un export Suunto au format .fit.":"";
  $("#st").textContent="";save()}
 $("#ff").addEventListener("change",async e=>{await ingest(e.target.files);e.target.value=""});
@@ -431,7 +431,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.23";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.24";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
@@ -450,19 +450,20 @@ async function ivGet(path,bin){
  if(r.status===429)throw{u:"Trop de requêtes : réessayez dans quelques minutes."};
  if(!r.ok)throw{u:"intervals.icu a répondu avec l’erreur "+r.status+"."};
  return bin?r.arrayBuffer():r.json()}
-function icuFix(ls){let n=0;(Array.isArray(ls)?ls:[]).forEach(x=>{const id=String(Math.round(Date.parse(x.start_date)/1000)),a=acts.find(a=>a.ivid===x.id||a.id===id);if(!a)return;a.ivid=x.id;const g=x.total_elevation_gain;if(g!=null&&g>0&&Math.round(g)!==a.asc){a.asc=Math.round(g);a.ascIcu=1;n++}});if(n)save();return n}
+function ivMatch(x){const t=Date.parse(x.start_date||x.start_date_local);let a=acts.find(a=>a.ivid===x.id);if(a)return a;let best=null,bd=1e9;acts.forEach(c=>{const d=Math.abs(c.t-t);if(d<bd){bd=d;best=c}});return bd<=10*60e3?best:null}
+function icuFix(ls){let n=0;(Array.isArray(ls)?ls:[]).forEach(x=>{const a=ivMatch(x);if(!a)return;a.ivid=x.id;const g=x.total_elevation_gain??x.icu_total_elevation_gain??x.elevation_gain;if(g!=null&&g>0&&Math.round(g)!==a.asc){a.asc=Math.round(g);a.ascIcu=1;n++}});if(n)save();return n}
 async function unz(buf){const u=new Uint8Array(buf);if(u[0]===0x1f&&u[1]===0x8b&&window.DecompressionStream){return await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer()}return buf}
 const IVN={Hike:"Hiking",Walk:"Hiking",WeightTraining:"Gym",IceSkate:"IceSkating",VirtualRun:"Treadmill"};
 $("#ivt").onclick=async()=>{ivMsg("Test en cours…");try{const a=await ivGet("/athlete/"+encodeURIComponent(IV.a||"0"));ivMsg("Connexion réussie"+(a&&a.name?" : "+a.name:"")+".")}catch(e){ivMsg(e.u||"Erreur inattendue.")}};
 $("#ivs").onclick=async()=>{const b=$("#ivs");b.disabled=true;try{
  const D=864e5,f=x=>new Date(x).toISOString().slice(0,10),ls=await ivGet("/athlete/"+encodeURIComponent(IV.a||"0")+"/activities?oldest="+f(Date.now()-IV.d*D)+"&newest="+f(Date.now()+D));
- const todo=(Array.isArray(ls)?ls:[]).filter(x=>{const id=String(Math.round(Date.parse(x.start_date)/1000));return !acts.some(a=>(a.id===id||a.ivid===x.id)&&a.v>=7)});
+ const todo=(Array.isArray(ls)?ls:[]).filter(x=>{const a=ivMatch(x);return !(a&&a.v>=7)});
  if(!todo.length){const u=icuFix(ls),w=await ivWell();ivMsg("Aucune nouvelle séance sur "+IV.d+" jours ("+(ls.length||0)+" déjà lues)"+(u?" · D+ mis à jour pour "+u+" séance(s)":"")+w+".");return}
  const files=[];let ko=0;
  for(let i=0;i<todo.length;i++){const x=todo[i];ivMsg("Téléchargement "+(i+1)+"/"+todo.length+"…");
   try{const buf=await unz(await ivGet("/activity/"+encodeURIComponent(x.id)+"/file",true));files.push(new File([buf],(IVN[x.type]||x.type||"Activity")+"_"+x.id+".fit"))}catch(e){if(e&&e.u&&/Clé|requêtes|Connexion/.test(e.u))throw e;ko++}}
  const n0=acts.length;await ingest(files);
- acts.forEach(a=>{const m=todo.find(x=>String(Math.round(Date.parse(x.start_date)/1000))===a.id);if(m)a.ivid=m.id});const u=icuFix(ls);save();
+ todo.forEach(x=>{const a=ivMatch(x);if(a)a.ivid=x.id});const u=icuFix(ls);save();
  const w=await ivWell();ivMsg(files.length+" séance(s) récupérée(s)"+(u?" · D+ mis à jour pour "+u+" séance(s)":"")+(ko?", "+ko+" sans fichier lisible":"")+($("#err").textContent?" · "+$("#err").textContent:"")+w+".")
 }catch(e){ivMsg(e.u||"Erreur inattendue pendant la synchronisation.")}finally{b.disabled=false}};
 {let arm=0,tm;const b=$("#clr");b.onclick=()=>{if(!arm){arm=1;b.textContent="Confirmer : tout supprimer ?";b.classList.add("on");$("#clrm").textContent="Les séances lues seront effacées de ce navigateur. Objectif, réglages et clé intervals.icu sont conservés.";tm=setTimeout(()=>{arm=0;b.textContent="Vider les données d’activité";b.classList.remove("on");$("#clrm").textContent=""},5000);return}
