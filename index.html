@@ -114,7 +114,7 @@ section.efs #ech{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid
 <div class="sl dlr"><label for="gk1">Charge du sac</label><div class="dl"><div class="tk"></div><div class="fl" id="dfill"></div><input type="range" id="gk1" min="0" max="25" step="1" aria-label="Charge minimale pour la préparation, en kilos"><input type="range" id="gk2" min="0" max="25" step="1" aria-label="Charge le jour de l’objectif, en kilos"></div><span id="gkv"></span></div>
 <p class="why">Curseur de gauche : charge minimum pour les entraînements<br>Curseur de droite : charge le jour de l’objectif</p></section>
 <section><h2 class="h2i"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 20v-4h-4"/></svg>Synchronisation intervals.icu</h2>
-<p class="why">Récupère directement les fichiers .fit de vos séances depuis intervals.icu (connecté à votre compte Suunto). Si vous corrigez le dénivelé positif d’une séance dans intervals.icu, la valeur corrigée remplace celle du fichier à la synchronisation suivante. La clé se crée dans intervals.icu, Réglages, « Developer Settings ». Elle reste dans ce navigateur ; ne partagez pas cette page avec la clé enregistrée.</p>
+<p class="why">Récupère directement les fichiers .fit de vos séances depuis intervals.icu (connecté à votre compte Suunto). Si vous corrigez le dénivelé positif d’une séance dans intervals.icu, la valeur corrigée remplace celle du fichier à la synchronisation suivante. La charge portée est reprise d’un champ personnalisé « Gilet » (en kg) ou d’une mention « Gilet:9kg » dans le nom de la séance ; une charge choisie dans App GR reste prioritaire. La clé se crée dans intervals.icu, Réglages, « Developer Settings ». Elle reste dans ce navigateur ; ne partagez pas cette page avec la clé enregistrée.</p>
 <div class="row"><input type="password" id="ivk" autocomplete="off" spellcheck="false" placeholder="Clé API intervals.icu" aria-label="Clé API intervals.icu"><input type="text" id="iva" inputmode="numeric" placeholder="ID athlète (0 = vous)" aria-label="Identifiant athlète" style="flex:0 1 150px"></div>
 <div class="sl"><label for="ivd">Jours à récupérer</label><input type="range" id="ivd" min="14" max="120" step="1"><span></span></div>
 <div class="row"><button id="ivs">Synchroniser</button><button class="sec" id="ivt">Tester la connexion</button></div>
@@ -159,7 +159,7 @@ function head(live){
 function list(){
  const el=$("#list");$("#lc").textContent=acts.length;
  if(!acts.length){el.innerHTML='<p class="why">Aucune séance importée. Ajoutez les exports de votre montre (fichiers .fit).</p>';return}
- el.innerHTML=acts.slice(0,60).map((a,i)=>`<div class="act"><div><span style="display:inline-block;vertical-align:middle;margin-right:8px">${chip(a.type)}</span>${new Date(a.t).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})} · ${a.dur} min<small>${a.tss!=null?"TSS "+(+a.tss).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.ep!=null?"EPOC "+(+a.ep).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.kcal} kcal${a.z45!=null&&a.z45>0?" · Z4-5 "+String(a.z45).replace(".",",")+" min":""}${a.auto&&a.type==="hiit"?' · <b class="hitd">HIT détecté</b>':""}${(a.asc!=null&&(a.asc>0||(a.v>=2&&a.type!=="marche")))?" · D+ "+a.asc+" m":""}</small></div><select data-i="${i}" aria-label="Type de séance">${Object.keys(TY).map(k=>`<option value="${k}"${k==a.type?" selected":""}>${TY[k]}</option>`).join("")}</select><select data-w="${i}" aria-label="Charge utilisée en kilos"><option value="">Charge</option>${Array.from({length:20},(_,n)=>n+6).map(n=>`<option value="${n}"${n==a.kg?" selected":""}>${n} kg</option>`).join("")}</select><button class="ghost" data-x="${i}" aria-label="Supprimer">×</button></div>`).join("");
+ el.innerHTML=acts.slice(0,60).map((a,i)=>`<div class="act"><div><span style="display:inline-block;vertical-align:middle;margin-right:8px">${chip(a.type)}</span>${new Date(a.t).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})} · ${a.dur} min<small>${a.tss!=null?"TSS "+(+a.tss).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.ep!=null?"EPOC "+(+a.ep).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.kcal} kcal${a.kgIcu&&a.kg?" · gilet "+a.kg+" kg (intervals.icu)":""}${a.z45!=null&&a.z45>0?" · Z4-5 "+String(a.z45).replace(".",",")+" min":""}${a.auto&&a.type==="hiit"?' · <b class="hitd">HIT détecté</b>':""}${(a.asc!=null&&(a.asc>0||(a.v>=2&&a.type!=="marche")))?" · D+ "+a.asc+" m":""}</small></div><select data-i="${i}" aria-label="Type de séance">${Object.keys(TY).map(k=>`<option value="${k}"${k==a.type?" selected":""}>${TY[k]}</option>`).join("")}</select><select data-w="${i}" aria-label="Charge utilisée en kilos"><option value="">Charge</option>${Array.from({length:25},(_,n)=>n+1).map(n=>`<option value="${n}"${n==a.kg?" selected":""}>${n} kg</option>`).join("")}</select><button class="ghost" data-x="${i}" aria-label="Supprimer">×</button></div>`).join("");
 }
 function save(){acts.sort((a,b)=>b.t-a.t);acts=acts.slice(0,60);st.set("a",acts);list();sum10()}
 function fitSession(buf){
@@ -199,7 +199,7 @@ async function ingest(files){
  $("#err").textContent=bad.length?"Fichier illisible : "+bad.join(", ")+". Il faut un export Suunto au format .fit.":"";
  $("#st").textContent="";save()}
 $("#ff").addEventListener("change",async e=>{await ingest(e.target.files);e.target.value=""});
-$("#list").addEventListener("change",e=>{const d=e.target.dataset;if(d.i!=null){acts[+d.i].type=e.target.value;acts[+d.i].man=1;acts[+d.i].auto=0;save()}else if(d.w!=null){acts[+d.w].kg=e.target.value?+e.target.value:null;save()}});
+$("#list").addEventListener("change",e=>{const d=e.target.dataset;if(d.i!=null){acts[+d.i].type=e.target.value;acts[+d.i].man=1;acts[+d.i].auto=0;save()}else if(d.w!=null){acts[+d.w].kg=e.target.value?+e.target.value:null;acts[+d.w].kgMan=1;acts[+d.w].kgIcu=0;save()}});
 $("#list").addEventListener("click",e=>{const x=e.target.dataset.x;if(x!=null){acts.splice(+x,1);save()}});
 const gsave=()=>{const d=$("#gd").value;if(!d)return;goal.n=$("#gn").value.trim()||"Objectif";goal.d=d;goal.m20=1;st.set("g",goal);head(true);sum10()};$("#gn").oninput=gsave;$("#gd").onchange=gsave;
 [["s1","wr","%"],["s2","en",""],["s3","so",""]].forEach(([id,k,u])=>{const i=$("#"+id);i.value=rec[k];i.nextElementSibling.textContent=rec[k]+u;i.oninput=()=>{rec[k]=+i.value;i.nextElementSibling.textContent=i.value+u;if(k==="wr"){rec.man=dKey(Date.now());raTxt()}st.set("r",rec);viz()}});
@@ -431,7 +431,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.24";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.25";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
@@ -451,6 +451,9 @@ async function ivGet(path,bin){
  if(!r.ok)throw{u:"intervals.icu a répondu avec l’erreur "+r.status+"."};
  return bin?r.arrayBuffer():r.json()}
 function ivMatch(x){const t=Date.parse(x.start_date||x.start_date_local);let a=acts.find(a=>a.ivid===x.id);if(a)return a;let best=null,bd=1e9;acts.forEach(c=>{const d=Math.abs(c.t-t);if(d<bd){bd=d;best=c}});return bd<=10*60e3?best:null}
+function gil(x){for(const k in x){if(/^gilet/i.test(k)){const v=parseFloat(String(x[k]).replace(",","."));if(v>0&&v<60)return v}}const m=/gilet\s*[:=]?\s*(\d+(?:[.,]\d+)?)\s*kg/i.exec(x.name||"");return m?parseFloat(m[1].replace(",",".")):null}
+function setKg(a,v){if(v==null||a.kgMan)return 0;v=Math.round(v);if(a.kg===v)return 0;a.kg=v;a.kgIcu=1;return 1}
+async function icuKg(ls){let n=0;const D=864e5;for(const x of(Array.isArray(ls)?ls:[])){const a=ivMatch(x);if(!a||a.kgMan)continue;let v=gil(x);if(v==null&&!a.kg&&Date.now()-a.t<21*D&&(a.type==="marche"||a.type==="hiit")){try{v=gil(await ivGet("/activity/"+encodeURIComponent(x.id)))}catch(e){}}n+=setKg(a,v)}if(n)save();return n}
 function icuFix(ls){let n=0;(Array.isArray(ls)?ls:[]).forEach(x=>{const a=ivMatch(x);if(!a)return;a.ivid=x.id;const g=x.total_elevation_gain??x.icu_total_elevation_gain??x.elevation_gain;if(g!=null&&g>0&&Math.round(g)!==a.asc){a.asc=Math.round(g);a.ascIcu=1;n++}});if(n)save();return n}
 async function unz(buf){const u=new Uint8Array(buf);if(u[0]===0x1f&&u[1]===0x8b&&window.DecompressionStream){return await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer()}return buf}
 const IVN={Hike:"Hiking",Walk:"Hiking",WeightTraining:"Gym",IceSkate:"IceSkating",VirtualRun:"Treadmill"};
@@ -458,13 +461,13 @@ $("#ivt").onclick=async()=>{ivMsg("Test en cours…");try{const a=await ivGet("/
 $("#ivs").onclick=async()=>{const b=$("#ivs");b.disabled=true;try{
  const D=864e5,f=x=>new Date(x).toISOString().slice(0,10),ls=await ivGet("/athlete/"+encodeURIComponent(IV.a||"0")+"/activities?oldest="+f(Date.now()-IV.d*D)+"&newest="+f(Date.now()+D));
  const todo=(Array.isArray(ls)?ls:[]).filter(x=>{const a=ivMatch(x);return !(a&&a.v>=7)});
- if(!todo.length){const u=icuFix(ls),w=await ivWell();ivMsg("Aucune nouvelle séance sur "+IV.d+" jours ("+(ls.length||0)+" déjà lues)"+(u?" · D+ mis à jour pour "+u+" séance(s)":"")+w+".");return}
+ if(!todo.length){const u=icuFix(ls),k=await icuKg(ls),w=await ivWell();ivMsg("Aucune nouvelle séance sur "+IV.d+" jours ("+(ls.length||0)+" déjà lues)"+(u?" · D+ mis à jour pour "+u+" séance(s)":"")+(k?" · charge du gilet reprise pour "+k+" séance(s)":"")+w+".");return}
  const files=[];let ko=0;
  for(let i=0;i<todo.length;i++){const x=todo[i];ivMsg("Téléchargement "+(i+1)+"/"+todo.length+"…");
   try{const buf=await unz(await ivGet("/activity/"+encodeURIComponent(x.id)+"/file",true));files.push(new File([buf],(IVN[x.type]||x.type||"Activity")+"_"+x.id+".fit"))}catch(e){if(e&&e.u&&/Clé|requêtes|Connexion/.test(e.u))throw e;ko++}}
  const n0=acts.length;await ingest(files);
- todo.forEach(x=>{const a=ivMatch(x);if(a)a.ivid=x.id});const u=icuFix(ls);save();
- const w=await ivWell();ivMsg(files.length+" séance(s) récupérée(s)"+(u?" · D+ mis à jour pour "+u+" séance(s)":"")+(ko?", "+ko+" sans fichier lisible":"")+($("#err").textContent?" · "+$("#err").textContent:"")+w+".")
+ todo.forEach(x=>{const a=ivMatch(x);if(a)a.ivid=x.id});const u=icuFix(ls),k=await icuKg(ls);save();
+ const w=await ivWell();ivMsg(files.length+" séance(s) récupérée(s)"+(u?" · D+ mis à jour pour "+u+" séance(s)":"")+(k?" · charge du gilet reprise pour "+k+" séance(s)":"")+(ko?", "+ko+" sans fichier lisible":"")+($("#err").textContent?" · "+$("#err").textContent:"")+w+".")
 }catch(e){ivMsg(e.u||"Erreur inattendue pendant la synchronisation.")}finally{b.disabled=false}};
 {let arm=0,tm;const b=$("#clr");b.onclick=()=>{if(!arm){arm=1;b.textContent="Confirmer : tout supprimer ?";b.classList.add("on");$("#clrm").textContent="Les séances lues seront effacées de ce navigateur. Objectif, réglages et clé intervals.icu sont conservés.";tm=setTimeout(()=>{arm=0;b.textContent="Vider les données d’activité";b.classList.remove("on");$("#clrm").textContent=""},5000);return}
  clearTimeout(tm);arm=0;acts=[];st.set("a",[]);EV=null;list();sum10();b.textContent="Vider les données d’activité";b.classList.remove("on");$("#clrm").textContent="Données d’activité supprimées. Relancez une synchronisation ou un import pour les retrouver."}}
