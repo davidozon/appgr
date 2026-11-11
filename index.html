@@ -56,6 +56,7 @@ html.lock,html.lock body{overflow:hidden}
 .apph{background:var(--bg);background:color-mix(in srgb,var(--bg) 72%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}:root button.bk{display:inline-flex;align-items:center;gap:4px;padding:0 12px 0 8px}
 .dn{display:block;white-space:nowrap;font-size:inherit}.dn small{font-size:.8em;color:var(--mut)}
 #pg{-webkit-appearance:none;appearance:none;height:10px;border-radius:5px;margin:8px 0;background:linear-gradient(to right,var(--ice) 0 12.5%,var(--prog) 12.5% 57.5%,var(--risk) 57.5% 100%)}#pg::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--card);border:3px solid var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.35);cursor:pointer}#pg::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--card);border:3px solid var(--ink);cursor:pointer}#pg::-moz-range-track{background:transparent}#pgx .zb{display:inline-block;margin-right:4px;vertical-align:1px}
+.hitd{color:var(--warn);font-weight:600}
 </style></head><body><main>
 <h1 class="apph"><span class="ti"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2F5D50"/><path d="M3.6 17.6 9 9.6l2.9 4.1 2.6-3.3 5.9 7.2Z" fill="#F6F8F9"/><rect x="13.2" y="4.6" width="6.2" height="1.6" rx=".3" fill="#F6F8F9"/><rect x="13.2" y="6.4" width="6.2" height="1.6" rx=".3" fill="#D2321C"/></svg><span class="tt">App GR<small class="ver"></small></span></span><span class="hb"><button type="button" class="hbtn" id="stb">Paramètres</button><button type="button" class="hbtn fsb" id="fsb" aria-label="Plein écran" title="Plein écran">⛶</button></span></h1>
 <section class="hero" aria-live="polite">
@@ -106,7 +107,7 @@ html.lock,html.lock body{overflow:hidden}
 <div class="row"><button id="pk">Choisir le dossier</button><button class="sec" id="pk2">Changer</button></div>
 <p class="why" id="dn"></p><p class="why" id="st"></p>
 <label class="file">Ou ajouter des fichiers .fit<input type="file" id="ff" accept=".fit" multiple></label>
-<p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours.</p>
+<p class="why">Les fichiers sont lus dans votre navigateur, rien n’est envoyé ailleurs. Choisissez le type de chaque séance : c’est lui qui équilibre les 10 jours. Une séance avec au moins 4 min en zones cardio 4 et 5, et au moins 12 % de sa durée, est classée automatiquement en Cardio HIT (« HIT détecté ») ; un type choisi à la main n’est jamais modifié.</p>
 <p class="msg" id="err"></p>
 <details><summary>Fichiers déjà lus (<span id="lc">0</span>)</summary><div id="list"></div></details></section>
 </div></div>
@@ -131,7 +132,7 @@ function head(live){
 function list(){
  const el=$("#list");$("#lc").textContent=acts.length;
  if(!acts.length){el.innerHTML='<p class="why">Aucune séance importée. Ajoutez les exports de votre montre (fichiers .fit).</p>';return}
- el.innerHTML=acts.slice(0,60).map((a,i)=>`<div class="act"><div><span style="display:inline-block;vertical-align:middle;margin-right:8px">${chip(a.type)}</span>${new Date(a.t).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})} · ${a.dur} min<small>${a.tss!=null?"TSS "+(+a.tss).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.ep!=null?"EPOC "+(+a.ep).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.kcal} kcal${(a.asc!=null&&(a.asc>0||(a.v>=2&&a.type!=="marche")))?" · D+ "+a.asc+" m":""}</small></div><select data-i="${i}" aria-label="Type de séance">${Object.keys(TY).map(k=>`<option value="${k}"${k==a.type?" selected":""}>${TY[k]}</option>`).join("")}</select><select data-w="${i}" aria-label="Charge utilisée en kilos"><option value="">Charge</option>${Array.from({length:20},(_,n)=>n+6).map(n=>`<option value="${n}"${n==a.kg?" selected":""}>${n} kg</option>`).join("")}</select><button class="ghost" data-x="${i}" aria-label="Supprimer">×</button></div>`).join("");
+ el.innerHTML=acts.slice(0,60).map((a,i)=>`<div class="act"><div><span style="display:inline-block;vertical-align:middle;margin-right:8px">${chip(a.type)}</span>${new Date(a.t).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})} · ${a.dur} min<small>${a.tss!=null?"TSS "+(+a.tss).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.ep!=null?"EPOC "+(+a.ep).toLocaleString("fr-FR",{maximumFractionDigits:1})+" · ":""}${a.kcal} kcal${a.z45!=null&&a.z45>0?" · Z4-5 "+String(a.z45).replace(".",",")+" min":""}${a.auto&&a.type==="hiit"?' · <b class="hitd">HIT détecté</b>':""}${(a.asc!=null&&(a.asc>0||(a.v>=2&&a.type!=="marche")))?" · D+ "+a.asc+" m":""}</small></div><select data-i="${i}" aria-label="Type de séance">${Object.keys(TY).map(k=>`<option value="${k}"${k==a.type?" selected":""}>${TY[k]}</option>`).join("")}</select><select data-w="${i}" aria-label="Charge utilisée en kilos"><option value="">Charge</option>${Array.from({length:20},(_,n)=>n+6).map(n=>`<option value="${n}"${n==a.kg?" selected":""}>${n} kg</option>`).join("")}</select><button class="ghost" data-x="${i}" aria-label="Supprimer">×</button></div>`).join("");
 }
 function save(){acts.sort((a,b)=>b.t-a.t);acts=acts.slice(0,60);st.set("a",acts);list();sum10()}
 function fitSession(buf){
@@ -159,17 +160,19 @@ function fitSession(buf){
   if(d.g===18&&!S.t)Object.assign(S,r,{t:1})}
  return S}
 
+const HIT_MIN=4,HIT_PCT=.12,isHit=a=>a.z45!=null&&a.z45>=HIT_MIN&&a.z45>=a.dur*HIT_PCT;
 async function ingest(files){
  const bad=[];
- for(const f of files){try{$("#st").textContent="Lecture de "+f.name+"…";if(acts.some(a=>a.src===f.name+f.size&&a.v>=6))continue;
+ for(const f of files){try{$("#st").textContent="Lecture de "+f.name+"…";if(acts.some(a=>a.src===f.name+f.size&&a.v>=7))continue;
   const S=fitSession(await f.arrayBuffer()),asc=S[22]!=null?Math.round(S[22]):null,dist=(S[9]||0)/100,t=(S[2]+631065600)*1000;
-  const a={src:f.name+f.size,id:String(Math.round(t/1000)),t:t,dur:Math.round((S[8]||S[7]||0)/60000),kcal:S[11]||0,rec:(S.recovery_time||0)/3600,ep:Math.round((S.peak_epoc||0)*10)/10,tss:S[35]!=null?Math.round(S[35])/10:null,te:(S[24]||0)/10,hz:Math.round((S[65]||[]).slice(2).reduce((s,x)=>s+(x||0),0)/6e3)/10,hr:S[16]||null,asc:asc,v:6,fm:null,z2:null,type:/^Gym/i.test(f.name)?"renfo":/^(Treadmill|Hiking|Mountaineering)/i.test(f.name)?"marche":/^IceSkating/i.test(f.name)?"patin":asc>150?"marche":(dist>1500?"base":"renfo")};
+  const a={src:f.name+f.size,id:String(Math.round(t/1000)),t:t,dur:Math.round((S[8]||S[7]||0)/60000),kcal:S[11]||0,rec:(S.recovery_time||0)/3600,ep:Math.round((S.peak_epoc||0)*10)/10,tss:S[35]!=null?Math.round(S[35])/10:null,te:(S[24]||0)/10,hz:Math.round((S[65]||[]).slice(2).reduce((s,x)=>s+(x||0),0)/6e3)/10,z45:S[65]?Math.round((S[65].slice(3,5).reduce((s,x)=>s+(x||0),0))/6e3)/10:null,hr:S[16]||null,asc:asc,v:7,fm:null,z2:null,type:/^Gym/i.test(f.name)?"renfo":/^(Treadmill|Hiking|Mountaineering)/i.test(f.name)?"marche":/^IceSkating/i.test(f.name)?"patin":asc>150?"marche":(dist>1500?"base":"renfo")};
   if(isNaN(a.t)||!a.dur)throw 0;
-  const o=acts.find(x=>x.id===a.id);if(o){a.type=o.type;if(o.kg!=null)a.kg=o.kg}acts=acts.filter(x=>x.id!==a.id);acts.push(a)}catch(x){bad.push(f.name)}}
+  const hit=isHit(a);if(hit&&a.type!=="patin"){a.type="hiit";a.auto=1}
+  const o=acts.find(x=>x.id===a.id);if(o){if(o.man||!hit||o.type==="patin"){a.type=o.type;a.auto=0}a.man=o.man;if(o.kg!=null)a.kg=o.kg}acts=acts.filter(x=>x.id!==a.id);acts.push(a)}catch(x){bad.push(f.name)}}
  $("#err").textContent=bad.length?"Fichier illisible : "+bad.join(", ")+". Il faut un export Suunto au format .fit.":"";
  $("#st").textContent="";save()}
 $("#ff").addEventListener("change",async e=>{await ingest(e.target.files);e.target.value=""});
-$("#list").addEventListener("change",e=>{const d=e.target.dataset;if(d.i!=null){acts[+d.i].type=e.target.value;save()}else if(d.w!=null){acts[+d.w].kg=e.target.value?+e.target.value:null;save()}});
+$("#list").addEventListener("change",e=>{const d=e.target.dataset;if(d.i!=null){acts[+d.i].type=e.target.value;acts[+d.i].man=1;acts[+d.i].auto=0;save()}else if(d.w!=null){acts[+d.w].kg=e.target.value?+e.target.value:null;save()}});
 $("#list").addEventListener("click",e=>{const x=e.target.dataset.x;if(x!=null){acts.splice(+x,1);save()}});
 const gsave=()=>{const d=$("#gd").value;if(!d)return;goal.n=$("#gn").value.trim()||"Objectif";goal.d=d;goal.m20=1;st.set("g",goal);head(true);sum10()};$("#gn").oninput=gsave;$("#gd").onchange=gsave;
 [["s1","wr","%"],["s2","en",""],["s3","so",""]].forEach(([id,k,u])=>{const i=$("#"+id);i.value=rec[k];i.nextElementSibling.textContent=rec[k]+u;i.oninput=()=>{rec[k]=+i.value;i.nextElementSibling.textContent=i.value+u;st.set("r",rec);viz()}});
@@ -401,7 +404,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.12";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.13";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
