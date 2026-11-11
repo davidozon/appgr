@@ -460,7 +460,7 @@ async function pick(){
 $("#pk").onclick=()=>dir?readDir():pick();
 $("#pk2").onclick=pick;
 (async()=>{try{if(window.showDirectoryPicker){dir=await idb("get");if(dir){$("#dn").textContent="Dossier mémorisé : "+dir.name;$("#pk").textContent="Relire le dossier"}}}catch(e){}})();
-const VER="v261111.46";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
+const VER="v261111.47";document.querySelectorAll(".ver").forEach(e=>e.textContent=VER);
 const setOpen=on=>{$("#set").hidden=!on;document.documentElement.classList.toggle("slock",on);if(on)$("#stc").focus();else $("#stb").focus()};
 $("#stb").onclick=()=>setOpen(true);$("#stc").onclick=()=>setOpen(false);
 document.addEventListener("click",e=>{if(e.target.closest("[data-open-set]")){e.preventDefault();setOpen(true)}});
@@ -510,6 +510,7 @@ function autoRec(){if(!WL.length)return null;const D=864e5,today=dKey(Date.now()
  const tt=Date.parse(t.d+"T12:00"),base=WL.filter(x=>x.d<t.d&&tt-Date.parse(x.d+"T12:00")<=28*D),zs=[],tx=[],st_=k=>{const v=base.map(x=>x[k]).filter(v=>v!=null);if(v.length<7)return null;const m=v.reduce((a,b)=>a+b,0)/v.length,sd=Math.sqrt(v.reduce((a,b)=>a+(b-m)**2,0)/v.length);return{m,sd}},cl=z=>Math.max(-2.5,Math.min(2.5,z));
  let b;if(t.hrv!=null&&(b=st_("hrv"))){zs.push(cl((t.hrv-b.m)/Math.max(b.sd,b.m*.05)));tx.push("VFC "+Math.round(t.hrv)+" ms (moy. "+Math.round(b.m)+")")}
  if(t.rhr!=null&&(b=st_("rhr"))){zs.push(cl((b.m-t.rhr)/Math.max(b.sd,1.5)));tx.push("FC repos "+Math.round(t.rhr)+" (moy. "+Math.round(b.m)+")")}
+ if(t.ahr!=null&&(b=st_("ahr"))){zs.push(cl((b.m-t.ahr)/Math.max(b.sd,1.5)));tx.push("FC moy. nuit "+Math.round(t.ahr)+" (moy. "+Math.round(b.m)+")")}
  if(t.ss!=null){zs.push(cl((t.ss-70)/15));tx.push("score de sommeil "+Math.round(t.ss))}else if(t.sl!=null&&(b=st_("sl"))){zs.push(cl((t.sl-b.m)/Math.max(b.sd,1800)));tx.push("sommeil "+Math.floor(t.sl/3600)+" h "+String(Math.round(t.sl%3600/60)).padStart(2,"0")+" (moy. "+Math.floor(b.m/3600)+" h "+String(Math.round(b.m%3600/60)).padStart(2,"0")+")")}
  if(!zs.length)return null;return{s:Math.round(Math.max(0,Math.min(100,70+12*zs.reduce((a,b)=>a+b,0)/zs.length))),txt:tx.join(" · "),d:t.d}}
 function wellPanel(){const el=$("#wel");if(!WL.length){el.hidden=true;return}el.hidden=false;const D=864e5,t=WL[WL.length-1],tt=Date.parse(t.d+"T12:00"),base=WL.filter(x=>x.d<t.d&&tt-Date.parse(x.d+"T12:00")<=28*D),last=WL.slice(-14);
