@@ -2,7 +2,7 @@
 // Chrome ignore un gestionnaire « fetch » vide (no-op) : il faut qu'il réponde réellement.
 // Réseau d'abord : chaque ouverture charge la dernière version publiée ;
 // le cache ne sert qu'en secours, hors connexion.
-const C="appgr-v261112.2",F=["./","index.html","manifest.webmanifest","icon-192.png?v=2","icon-512.png?v=2","apple-touch-icon.png?v=2"];
+const C="appgr-v261112.3",F=["./","index.html","manifest.webmanifest","icon-192.png?v=2","icon-512.png?v=2","apple-touch-icon.png?v=2"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)).catch(()=>{}).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET"||new URL(r.url).origin!==location.origin)return;
